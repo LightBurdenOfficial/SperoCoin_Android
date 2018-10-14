@@ -13,3 +13,4 @@ src/leveldb/util/*.o
 src/leveldb/libleveldb.a
 src/leveldb/libmemenv.a
 src/qt/locale/*.qm
+SperoCoin-qt.pro.user
