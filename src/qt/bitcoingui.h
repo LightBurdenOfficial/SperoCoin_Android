@@ -19,6 +19,9 @@ class BlockBrowser;
 
 QT_BEGIN_NAMESPACE
 class QLabel;
+//Barra de Status como botões
+class QToolButton;
+//Barra de Status como botões
 class QLineEdit;
 class QTableView;
 class QAbstractItemModel;
@@ -71,7 +74,11 @@ private:
     SignVerifyMessageDialog *signVerifyMessageDialog;
 
     QLabel *labelEncryptionIcon;
-    QLabel *labelStakingIcon;
+    //Barra de Status como botões
+    //adding staking info toolbutton
+    QToolButton *buttonStakingIcon;
+    QToolButton *buttonConnectionsIcon;
+    //Barra de Status como botões
     QLabel *labelConnectionsIcon;
     QLabel *labelBlocksIcon;
     QLabel *progressBarLabel;
@@ -200,7 +207,11 @@ private slots:
     /** simply calls showNormalIfMinimized(true) for use in SLOT() macro */
     void toggleHidden();
 
-    void updateStakingIcon();
+    //Barra de Status como botões
+    void updateButtonStakingIcon();
+    void clickButtonStakingIcon();
+    void clickButtonConnectionsIcon();
+    //Barra de Status como botões
 };
 
 #endif
