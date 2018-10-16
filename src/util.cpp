@@ -1092,6 +1092,7 @@ string randomStrGen(int length)
     return result;
 }
 
+//Alterado para testes em Testnet - 16/10/2018
 void createConf()
 {
     srand(time(NULL));
@@ -1100,24 +1101,21 @@ void createConf()
     pConf.open(GetConfigFile().string().c_str());
     pConf << "rpcuser=user\nrpcpassword="
     + randomStrGen(15)
-    + "\nrpcport=55681"
-    + "\nport=55680"
+    + "\nrpcport=55691"
+    + "\nport=55690"
     + "\n#(0=off, 1=on) daemon - run in the background as a daemon and accept commands"
     + "\ndaemon=1"
     + "\nlisten=1"
     + "\ntxindex=1"
     + "\n#(0=off, 1=on) server - accept command line and JSON-RPC commands"
     + "\nserver=1"
-    + "\nrpcallowip=127.0.0.1"
-    + "\ntestnet=0"
-    + "\naddnode=sperocoin.ddns.net:55680"
-    + "\naddnode=dnssperocoin.ddnsking.com:55680"
-    + "\naddnode=18.228.13.3:55680"
-    + "\naddnode=35.232.45.9:55680"
-    + "\naddnode=35.198.22.94:55680"
-    + "\naddnode=35.199.96.221:55680";
+    + "\nrpcallowip=*"
+    + "\ntestnet=1"
+    + "\naddnode=18.228.13.3:55690"
+    + "\naddnode=18.228.13.3:55692";
    pConf.close();
 }
+//Alterado para testes em Testnet - 16/10/2018
 
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)

@@ -1,4 +1,3 @@
-android/*.*
 build_release_5.11/*.*
 src/obj/*.o
 src/obj/*.P

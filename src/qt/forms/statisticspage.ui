@@ -555,7 +555,7 @@
       <property name="font">
        <font>
         <family>Century Gothic</family>
-        <pointsize>6</pointsize>
+        <pointsize>5</pointsize>
         <weight>9</weight>
         <italic>false</italic>
         <bold>false</bold>
@@ -565,10 +565,21 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 75 6pt &quot;Century Gothic&quot;; color: &quot;black&quot;;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
-       <string>Update Statistics</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normalon>G:/Meus Documentos/Minhas imagens/Restart_48px.png</normalon>
+       </iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>33</height>
+       </size>
       </property>
       <property name="autoDefault">
        <bool>true</bool>
