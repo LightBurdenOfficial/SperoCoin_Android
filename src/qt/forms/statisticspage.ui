@@ -572,7 +572,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normalon>G:/Meus Documentos/Minhas imagens/Restart_48px.png</normalon>
+        <normalon>:/icons/reload</normalon>
        </iconset>
       </property>
       <property name="iconSize">
