@@ -284,6 +284,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/aboutdialog.h \
     src/qt/editaddressdialog.h \
     src/qt/bitcoinaddressvalidator.h \
+    src/qt/intro.h \
     src/qt/statisticspage.h \
     src/qt/blockbrowser.h \
     src/alert.h \
@@ -380,6 +381,7 @@ HEADERS += src/qt/bitcoingui.h \
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
+    src/qt/intro.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
     src/qt/sendcoinsdialog.cpp \
@@ -454,6 +456,7 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
 RESOURCES += src/qt/bitcoin.qrc
 
 FORMS += \
+    src/qt/forms/intro.ui \
     src/qt/forms/coincontroldialog.ui \
     src/qt/forms/sendcoinsdialog.ui \
     src/qt/forms/addressbookpage.ui \

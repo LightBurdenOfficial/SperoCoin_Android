@@ -27,7 +27,11 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-
+//Adição da Intro
+#if BOOST_FILESYSTEM_VERSION >= 3
+#include <boost/filesystem/detail/utf8_codecvt_facet.hpp>
+#endif
+//Adição da Intro
 #ifdef WIN32
 #ifdef _WIN32_WINNT
 #undef _WIN32_WINNT
@@ -45,9 +49,34 @@
 #include "shlobj.h"
 #include "shellapi.h"
 #endif
-
+//Adição da Intro
+#if BOOST_FILESYSTEM_VERSION >= 3
+static boost::filesystem::detail::utf8_codecvt_facet utf8;
+#endif
+//Adição da Intro
 namespace GUIUtil {
-
+//Adição da Intro
+#if BOOST_FILESYSTEM_VERSION >= 3
+boost::filesystem::path qstringToBoostPath(const QString &path)
+{
+    return boost::filesystem::path(path.toStdString(), utf8);
+}
+QString boostPathToQString(const boost::filesystem::path &path)
+{
+    return QString::fromStdString(path.string(utf8));
+}
+#else
+#warning Conversion between boost path and QString can use invalid character encoding with boost_filesystem v2 and older
+boost::filesystem::path qstringToBoostPath(const QString &path)
+{
+    return boost::filesystem::path(path.toStdString());
+}
+QString boostPathToQString(const boost::filesystem::path &path)
+{
+    return QString::fromStdString(path.string());
+}
+#endif
+//Adição da Intro
 QString dateTimeStr(const QDateTime &date)
 {
     return date.date().toString(Qt::SystemLocaleShortDate) + QString(" ") + date.toString("hh:mm");
@@ -270,7 +299,15 @@ void openDebugLogfile()
     if (boost::filesystem::exists(pathDebug))
         QDesktopServices::openUrl(QUrl::fromLocalFile(QString::fromStdString(pathDebug.string())));
 }
-
+//Adição da Intro
+void openConfigfile()
+{
+    boost::filesystem::path pathConfig = GetConfigFile();
+    /* Open idealcash.conf with the associated application */
+    if (boost::filesystem::exists(pathConfig))
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QString::fromStdString(pathConfig.string())));
+}
+//Adição da Intro
 ToolTipToRichTextFilter::ToolTipToRichTextFilter(int size_threshold, QObject *parent) :
     QObject(parent), size_threshold(size_threshold)
 {

@@ -208,7 +208,7 @@ QApplication::setStyle(QStyleFactory::create("android"));
     // as they make the text unreadable (workaround for issue #1071)
     // See https://qt-project.org/doc/qt-4.8/gallery.html
     QString curStyle = qApp->style()->metaObject()->className();
-    if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
+    if(curStyle == "QWindowsStyle" || curStyle == "QWindowsVistaStyle")
     {
         progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
     }

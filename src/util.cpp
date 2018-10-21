@@ -1081,8 +1081,7 @@ boost::filesystem::path GetConfigFile()
     return pathConfigFile;
 }
 
-string randomStrGen(int length)
-{
+string randomStrGen(int length){
     static string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     string result;
     result.resize(length);
@@ -1098,7 +1097,13 @@ void createConf()
     srand(time(NULL));
 
     ofstream pConf;
+//Adição da Intro
+#if BOOST_FILESYSTEM_VERSION >= 3
+    pConf.open(GetConfigFile().generic_string().c_str());
+#else
     pConf.open(GetConfigFile().string().c_str());
+#endif
+//Adição da Intro
     pConf << "rpcuser=user\nrpcpassword="
     + randomStrGen(15)
     + "\nrpcport=55691"
@@ -1206,6 +1211,8 @@ void ShrinkDebugFile()
             fclose(file);
         }
     }
+        else if(file != NULL)
+         fclose(file);
 }
 
 //
