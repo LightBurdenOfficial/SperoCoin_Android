@@ -34,6 +34,15 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Century Gothic</family>
+       <pointsize>12</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -169,455 +178,468 @@ font-weight:bold;</string>
          </layout>
         </item>
         <item>
-         <widget class="QWidget" name="widgetCoinControl" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayoutCoinControl5">
-           <property name="leftMargin">
-            <number>0</number>
+          <widget class="QWidget" name="widgetCoinControl">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>816</width>
+             <height>110</height>
+            </rect>
            </property>
-           <property name="topMargin">
-            <number>0</number>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="rightMargin">
-            <number>0</number>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
            </property>
-           <property name="bottomMargin">
-            <number>0</number>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayoutCoinControl3" stretch="0,0,0,1">
-             <property name="spacing">
-              <number>20</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>10</number>
-             </property>
-             <item>
-              <layout class="QFormLayout" name="formLayoutCoinControl1">
-               <property name="horizontalSpacing">
-                <number>10</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>14</number>
-               </property>
-               <property name="leftMargin">
-                <number>10</number>
-               </property>
-               <property name="topMargin">
-                <number>4</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="labelCoinControlQuantityText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+           <layout class="QHBoxLayout" name="horizontalLayoutCoinControl5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayoutCoinControl3" stretch="0,0,0,1">
+              <property name="spacing">
+               <number>20</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>10</number>
+              </property>
+              <item>
+               <layout class="QFormLayout" name="formLayoutCoinControl1">
+                <property name="horizontalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>14</number>
+                </property>
+                <property name="leftMargin">
+                 <number>10</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="labelCoinControlQuantityText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Quantity:</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="labelCoinControlBytesText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Quantity:</string>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="labelCoinControlBytesText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Bytes:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinControlQuantity">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="labelCoinControlBytes">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayoutCoinControl2">
-               <property name="horizontalSpacing">
-                <number>10</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>14</number>
-               </property>
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>4</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="labelCoinControlAmountText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Bytes:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="labelCoinControlQuantity">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="labelCoinControlBytes">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QFormLayout" name="formLayoutCoinControl2">
+                <property name="horizontalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>14</number>
+                </property>
+                <property name="leftMargin">
+                 <number>6</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="labelCoinControlAmountText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Amount:</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="labelCoinControlPriorityText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Amount:</string>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="labelCoinControlPriorityText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Priority:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinControlAmount">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0.00 SPERO</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="labelCoinControlPriority">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>medium</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayoutCoinControl3">
-               <property name="horizontalSpacing">
-                <number>10</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>14</number>
-               </property>
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>4</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="labelCoinControlFeeText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Priority:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="labelCoinControlAmount">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0.00 SPERO</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="labelCoinControlPriority">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>medium</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QFormLayout" name="formLayoutCoinControl3">
+                <property name="horizontalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>14</number>
+                </property>
+                <property name="leftMargin">
+                 <number>6</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="labelCoinControlFeeText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Fee:</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="labelCoinControlLowOutputText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Fee:</string>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="labelCoinControlLowOutputText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Low Output:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinControlFee">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0.00 SPERO</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="labelCoinControlLowOutput">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>no</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayoutCoinControl4">
-               <property name="horizontalSpacing">
-                <number>10</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>14</number>
-               </property>
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="topMargin">
-                <number>4</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="labelCoinControlAfterFeeText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>Low Output:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="labelCoinControlFee">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0.00 SPERO</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="labelCoinControlLowOutput">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>no</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QFormLayout" name="formLayoutCoinControl4">
+                <property name="horizontalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>14</number>
+                </property>
+                <property name="leftMargin">
+                 <number>6</number>
+                </property>
+                <property name="topMargin">
+                 <number>4</number>
+                </property>
+                <property name="rightMargin">
+                 <number>6</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="labelCoinControlAfterFeeText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>After Fee:</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinControlAfterFee">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0.00 SPERO</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="labelCoinControlChangeText">
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;
+                  </property>
+                  <property name="text">
+                   <string>After Fee:</string>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="labelCoinControlAfterFee">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0.00 SPERO</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="labelCoinControlChangeText">
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
-                 </property>
-                 <property name="text">
-                  <string>Change</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="labelCoinControlChange">
-                 <property name="font">
-                  <font>
-                   <family>Century Gothic</family>
-                   <pointsize>7</pointsize>
-                   <weight>50</weight>
-                   <italic>false</italic>
-                   <bold>false</bold>
-                  </font>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>0.00 SPERO</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
+                  </property>
+                  <property name="text">
+                   <string>Change</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="labelCoinControlChange">
+                  <property name="font">
+                   <font>
+                    <family>Century Gothic</family>
+                    <pointsize>7</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>IBeamCursor</cursorShape>
+                  </property>
+                  <property name="contextMenuPolicy">
+                   <enum>Qt::ActionsContextMenu</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font:7pt &quot;Century Gothic&quot;;</string>
+                  </property>
+                  <property name="text">
+                   <string>0.00 SPERO</string>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item>
@@ -734,7 +756,7 @@ font-weight:bold;</string>
         <x>0</x>
         <y>0</y>
         <width>829</width>
-        <height>139</height>
+        <height>137</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">

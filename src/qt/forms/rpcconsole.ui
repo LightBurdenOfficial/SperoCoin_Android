@@ -20,22 +20,22 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="styleSheet">
-      <string notr="true">font: 75 12pt &quot;Century Gothic&quot;;</string>
+      <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_info">
       <attribute name="title">
        <string>&amp;Information</string>
       </attribute>
-        <layout class="QGridLayout" name="gridLayout_2">
+      <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <widget class="QLabel" name="label_9">
          <property name="font">
           <font>
            <family>Century Gothic</family>
-           <pointsize>12</pointsize>
+           <pointsize>8</pointsize>
            <weight>9</weight>
            <italic>false</italic>
            <bold>false</bold>
@@ -257,6 +257,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="styleSheet">
           <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
          </property>
@@ -391,12 +397,12 @@
         </widget>
        </item>
        <item row="13" column="1">
-       <spacer name="verticalSpacer_2">
-       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
-         <size>
+          <size>
            <width>17</width>
            <height>14</height>
           </size>
@@ -455,13 +461,13 @@
          </property>
         </widget>
        </item>
-      <item row="16" column="0">
+       <item row="16" column="0">
         <widget class="QPushButton" name="showCLOptionsButton">
          <property name="toolTip">
           <string>Show the SperoCoin-Qt help message to get a list with possible SperoCoin command-line options.</string>
          </property>
          <property name="styleSheet">
-          <string notr="true">font: 75 10pt &quot;Century Gothic&quot;;</string>
+          <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
          </property>
          <property name="text">
           <string>&amp;Show</string>
@@ -503,7 +509,7 @@
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">font: 75 12pt &quot;Century Gothic&quot;;</string>
+          <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -531,7 +537,7 @@
          <item>
           <widget class="QLineEdit" name="lineEdit">
            <property name="styleSheet">
-            <string notr="true">font: 75 12pt &quot;Century Gothic&quot;;</string>
+            <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
            </property>
           </widget>
          </item>

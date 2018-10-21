@@ -182,8 +182,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>300</width>
-       <height>50</height>
+       <width>800</width>
+       <height>90</height>
       </size>
      </property>
      <property name="toolTip">
@@ -217,8 +217,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>300</width>
-       <height>50</height>
+       <width>800</width>
+       <height>90</height>
       </size>
      </property>
      <property name="toolTip">
@@ -252,8 +252,8 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>300</width>
-       <height>50</height>
+       <width>800</width>
+       <height>90</height>
       </size>
      </property>
      <property name="styleSheet">
