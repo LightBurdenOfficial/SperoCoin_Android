@@ -16,7 +16,7 @@
 #include <QDesktopWidget>
 
 #define DECORATION_SIZE 64
-#define NUM_ITEMS 3
+#define NUM_ITEMS 2
 
 class TxViewDelegate : public QAbstractItemDelegate
 {
