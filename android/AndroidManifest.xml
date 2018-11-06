@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<manifest package="org.sperocoin.digitalcoinbrl" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.6.4.5b-BETA" android:versionCode="1" android:installLocation="auto">
+<manifest package="org.sperocoin.digitalcoinbrl" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="2.6.4.5a-BETA" android:versionCode="1" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="SperoCoin-Paisagem" android:icon="@drawable/icon">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.qtproject.qt5.android.bindings.QtActivity" android:label="SperoCoin-Paisagem" android:screenOrientation="sensorLandscape" android:launchMode="singleTop">
             <intent-filter>
