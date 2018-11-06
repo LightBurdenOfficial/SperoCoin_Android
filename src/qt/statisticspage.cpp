@@ -17,6 +17,17 @@ StatisticsPage::StatisticsPage(QWidget *parent) :
     ui(new Ui::StatisticsPage)
 {
     ui->setupUi(this);
+//adding android size code
+            QFont font;
+            font.setFamily(font.defaultFamily());
+            QRect rec = QApplication::desktop()->screenGeometry();
+            int fS=std::max(7,(int)rec.width()/80);
+            font.setPointSize(fS);
+            this->setFont(font);
+            this->setFixedWidth((int)rec.width());
+            this->setFixedHeight((int)(rec.height()*0.8));
+    setFixedSize(400, 420);
+
     connect(ui->startButton, SIGNAL(pressed()), this, SLOT(updateStatistics()));
 }
 
@@ -61,17 +72,17 @@ void StatisticsPage::updateStatistics()
     if (pindexBest->nHeight < LAST_POW_BLOCK)
     {
         phase = "Hibrid Proof of Work+Proof of Stake";
-    nSubsidy = 2;
+	nSubsidy = 2;
     }
     else
     {
         phase = "Proof of Stake";
-    nSubsidy = 0;
+	nSubsidy = 0;
     }
     if (pindexBest->nHeight > 263250)
     {
         phase = "Hibrid Proof of Work+Proof of Stake";
-    nSubsidy = 0.05;
+	nSubsidy = 0.05;
     }
     QString subsidy = QString::number(nSubsidy, 'f', 6);
     QString hardness = QString::number(pHardness, 'f', 6);
@@ -115,7 +126,7 @@ void StatisticsPage::updateStatistics()
     {
         ui->rewardBox->setText("<b><font color=\"red\">" + subsidy + "</font></b>");
     } else {
-    ui->rewardBox->setText(subsidy);
+	ui->rewardBox->setText(subsidy);
     }
 
     if(pHardness > hardnessPrevious)

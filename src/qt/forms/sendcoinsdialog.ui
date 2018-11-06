@@ -822,12 +822,6 @@ font-weight:bold;</string>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
      <property name="styleSheet">
       <string notr="true">font:12pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
@@ -844,12 +838,6 @@ font-weight:bold;</string>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
      </property>
      <property name="cursor">
       <cursorShape>IBeamCursor</cursorShape>

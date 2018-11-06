@@ -2,7 +2,7 @@
 
 [![N|Solid](https://sperocoin.ddns.net/files/footer-logo1.png)](https://sperocoin.ddns.net.net/)
 
-## Versão: 2.6.4.4a-BETA
+## Versão: 2.6.4.4a-BETA Modelo Paisagem/Landscape
 ### `ATENÇÃO! Este aplicativo ainda está em fases de testes, sendo utilizado somente na Testnet SperoCoin.`
 
 ### Dependências Utilizadas:

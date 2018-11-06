@@ -182,11 +182,11 @@ void TransactionView::setModel(WalletModel *model)
         transactionView->verticalHeader()->hide();
 
         transactionView->horizontalHeader()->resizeSection(
-                TransactionTableModel::Status, 10);
+                TransactionTableModel::Status, 23);
         transactionView->horizontalHeader()->resizeSection(
-                TransactionTableModel::Date, 100);
+                TransactionTableModel::Date, 120);
         transactionView->horizontalHeader()->resizeSection(
-                TransactionTableModel::Type, 100);
+                TransactionTableModel::Type, 120);
         //Início das Alterações para Android e versão Qt5- Francis Santana
        #if QT_VERSION < 0x050000
                transactionView->horizontalHeader()->setResizeMode(
@@ -196,7 +196,7 @@ void TransactionView::setModel(WalletModel *model)
        #endif
         //Fim das Alterações para Android e versão Qt5- Francis Santana
         transactionView->horizontalHeader()->resizeSection(
-                TransactionTableModel::Amount, 120);
+                TransactionTableModel::Amount, 100);
     }
 }
 
