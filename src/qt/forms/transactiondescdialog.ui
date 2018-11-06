@@ -6,47 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>335</height>
+    <width>620</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Transaction details</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">font: 75 12pt &quot;Century Gothic&quot;;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTextEdit" name="detailText">
      <property name="font">
       <font>
-       <family>Century Gothic</family>
-       <pointsize>8</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
+       <pointsize>9</pointsize>
       </font>
      </property>
      <property name="toolTip">
       <string>This pane shows a detailed description of the transaction</string>
      </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 8pt &quot;Century Gothic&quot;;</string>
-     </property>
      <property name="readOnly">
       <bool>true</bool>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="styleSheet">
-      <string notr="true">font: 75 9pt &quot;Century Gothic&quot;;</string>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

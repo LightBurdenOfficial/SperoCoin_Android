@@ -303,7 +303,7 @@ void openDebugLogfile()
 void openConfigfile()
 {
     boost::filesystem::path pathConfig = GetConfigFile();
-    /* Open idealcash.conf with the associated application */
+    /* Open SperoCoin.conf with the associated application */
     if (boost::filesystem::exists(pathConfig))
         QDesktopServices::openUrl(QUrl::fromLocalFile(QString::fromStdString(pathConfig.string())));
 }

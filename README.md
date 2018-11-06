@@ -25,8 +25,8 @@ https://github.com/hypnosis-i2p/android-ifaddrs-from-android-source
 QrEncode 4.0.2:
 https://fukuchi.org/works/qrencode/
 
-QrEncode 4.0.2:
-https://fukuchi.org/works/qrencode/
+Android SDK:
+https://developer.android.com/studio/
 ```
 
 ### Agradecimentos Especiais:

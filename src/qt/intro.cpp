@@ -214,7 +214,7 @@ void Intro::on_dataDirectory_textChanged(const QString &dataDirStr)
 }
 void Intro::on_ellipsisButton_clicked()
 {
-    QString dir = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(0, "Choose data directory", ui->dataDirectory->text()));
+    QString dir = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Choose data directory"), "/sdcard", QFileDialog::ShowDirsOnly));
     if(!dir.isEmpty())
         ui->dataDirectory->setText(dir);
 }

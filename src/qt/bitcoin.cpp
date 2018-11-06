@@ -97,7 +97,7 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
         QApplication::installTranslator(&translator);
 }
 
-//Adição da Intro
+
 
 static void ThreadSafeMessageBox(const std::string& message, const std::string& caption, int style)
 {
@@ -152,7 +152,7 @@ static void InitMessage(const std::string &message)
 
     if(splashref)
     {
-        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(0,0,0));
+        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(255,2,0));
         QApplication::instance()->processEvents();
     }
 }
@@ -185,13 +185,7 @@ static void handleRunawayException(std::exception *e)
 int main(int argc, char *argv[])
 {
          checkPermission();
-//    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", QString("1").toLatin1());
- //   qputenv("QT_SCALE_FACTOR", "0");
-//          QGuiApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
-//    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", QString("2").toLatin1());
-
-    // Do this early as we don't want to bother initializing if we are just calling IPC
-    ipcScanRelay(argc, argv);
+        ipcScanRelay(argc, argv);
 
 #if QT_VERSION < 0x050000
     // Internal string conversion is all UTF-8
@@ -201,24 +195,7 @@ int main(int argc, char *argv[])
 
     Q_INIT_RESOURCE(bitcoin);
     QApplication app(argc, argv);
-   //enable high dpi scaling android
-    //qputenv("QT_SCALE_FACTOR", "0.5");
-    //qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "0.5");
-//    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-//        //testing android style
-//        QApplication::setStyle(QStyleFactory::create("android"));
 
-//Adição da Intro
-    // User language is set up: pick a data directory
-    Intro::pickDataDirectory();
-
-    // Do this early as we don't want to bother initializing if we are just calling IPC
-    // ... but do it after creating app, so QCoreApplication::arguments is initialized:
-    if (PaymentServer::ipcSendCommandLine())
-        exit(0);
-    PaymentServer* paymentServer = new PaymentServer(&app);
-
-//Adição da Intro
 // Application identification (must be set before OptionsModel is initialized,
 // as it is used to locate QSettings)
 app.setOrganizationName("SperoCoin");
@@ -230,10 +207,12 @@ app.setOrganizationName("SperoCoin");
     // Now that QSettings are accessible, initialize translations
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
-//Adição da Intro
 
     // Command-line options take precedence:
     ParseParameters(argc, argv);
+
+    // User language is set up: pick a data directory
+    Intro::pickDataDirectory();
 
     // Install global event filter that makes sure that long tooltips can be word-wrapped
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
@@ -298,10 +277,6 @@ app.setOrganizationName("SperoCoin");
                 // Put this in a block, so that the Model objects are cleaned up before
                 // calling Shutdown().
 
-        paymentServer->setOptionsModel(&optionsModel);
-
-                optionsModel.Upgrade(); // Must be done after AppInit2
-
                 if (splashref)
                     splash.finish(&window);
 
@@ -320,11 +295,6 @@ app.setOrganizationName("SperoCoin");
                 {
                     window.show();
                 }
-
-                // Now that initialization/startup is done, process any command-line
-                // bitcoin: URIs
-                QObject::connect(paymentServer, SIGNAL(receivedURI(QString)), &window, SLOT(handleURI(QString)));
-                QTimer::singleShot(100, paymentServer, SLOT(uiReady()));
 
                 // Place this here as guiref has to be defined if we don't want to lose URIs
                 ipcInit(argc, argv);

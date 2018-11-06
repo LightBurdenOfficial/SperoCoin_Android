@@ -93,7 +93,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 //enable high dpi scaling android
 //    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 //testing android style
-QApplication::setStyle(QStyleFactory::create("android"));
+    QApplication::setStyle(QStyleFactory::create("fusion"));
+//QApplication::setStyle(QStyleFactory::create("android"));
 //qDebug() << QStyleFactory::keys();
     //    resize(850, 550);
     //adding android size code
@@ -975,7 +976,7 @@ void BitcoinGUI::backupWallet()
         QString saveDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     #endif
     //Fim das Alterações para Android e versão Qt5- Francis Santana
-    QString filename = QFileDialog::getSaveFileName(this, tr("Backup Wallet"), saveDir, tr("Wallet Data (*.dat)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Backup Wallet"), "/sdcard", tr("Wallet Data (*.dat)"));
     if(!filename.isEmpty()) {
         if(!walletModel->backupWallet(filename)) {
             QMessageBox::warning(this, tr("Backup Failed"), tr("There was an error trying to save the wallet data to the new location."));

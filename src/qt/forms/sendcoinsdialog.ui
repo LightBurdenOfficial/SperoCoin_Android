@@ -119,6 +119,24 @@ font-weight:bold;</string>
           </property>
           <item>
            <widget class="QPushButton" name="pushButtonCoinControl">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>80</horstretch>
+              <verstretch>30</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">font:6pt &quot;Century Gothic&quot;;</string>
             </property>
@@ -746,7 +764,7 @@ font-weight:bold;</string>
     </widget>
    </item>
    <item>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="QScrollArea" name="scrollArea_1">
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -756,7 +774,7 @@ font-weight:bold;</string>
         <x>0</x>
         <y>0</y>
         <width>829</width>
-        <height>137</height>
+        <height>130</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -804,6 +822,12 @@ font-weight:bold;</string>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">font:12pt &quot;Century Gothic&quot;;
 font-weight:bold;</string>
@@ -820,6 +844,12 @@ font-weight:bold;</string>
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="cursor">
       <cursorShape>IBeamCursor</cursorShape>
@@ -935,7 +965,7 @@ font-weight:bold;</string>
       </layout>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <spacer name="horizontalSpacer_1">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
