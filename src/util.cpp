@@ -1091,7 +1091,7 @@ string randomStrGen(int length){
     return result;
 }
 
-//Alterado para testes em Testnet - 16/10/2018
+
 void createConf()
 {
     srand(time(NULL));
@@ -1115,12 +1115,16 @@ void createConf()
     + "\n#(0=off, 1=on) server - accept command line and JSON-RPC commands"
     + "\nserver=1"
     + "\nrpcallowip=*"
-    + "\ntestnet=1"
-    + "\naddnode=18.228.13.3:55690"
-    + "\naddnode=18.228.13.3:55692";
+    + "\ntestnet=0"
+    + "\n# MainNet"
+    + "\naddnode=35.198.22.94:55680"
+    + "\naddnode=sperocoin.ddns.net:55680"
+    + "\naddnode=167.114.103.43:55680"
+    + "\naddnode=104.248.225.117:55680"
+    + "\naddnode=45.195.201.179:55680";
    pConf.close();
 }
-//Alterado para testes em Testnet - 16/10/2018
+
 
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
