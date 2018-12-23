@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c7385f16c9d4878b83005855f2895dd)](https://app.codacy.com/app/DigitalCoin1/SperoCoin_Android?utm_source=github.com&utm_medium=referral&utm_content=DigitalCoin1/SperoCoin_Android&utm_campaign=Badge_Grade_Dashboard)
 [![Known Vulnerabilities](https://snyk.io/test/github/DigitalCoin1/SperoCoin_Android/badge.svg?targetFile=android%2Fbuild.gradle)](https://snyk.io/test/github/DigitalCoin1/SperoCoin_Android?targetFile=android%2Fbuild.gradle)
 
 # QT Android Mobile Wallet SperoCoin versão Full Node
