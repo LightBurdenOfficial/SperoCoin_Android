@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/DigitalCoin1/SperoCoin_Android/badge.svg?targetFile=android%2Fbuild.gradle)](https://snyk.io/test/github/DigitalCoin1/SperoCoin_Android?targetFile=android%2Fbuild.gradle)
+
 # QT Android Mobile Wallet SperoCoin versão Full Node
 
 [![N|Solid](https://sperocoin.ddns.net/files/footer-logo1.png)](https://sperocoin.ddns.net.net/)
