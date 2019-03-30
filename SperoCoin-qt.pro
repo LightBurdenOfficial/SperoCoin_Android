@@ -57,14 +57,14 @@ android {
         BOOST_INCLUDE_PATH = $$MAIN_PATH/boost_1_57_0
         BOOST_PATH = $$MAIN_PATH/boost_1_57_0
         #/stage/lib
-        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.1l
+        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2
 
         #MINIUPNPC Prebuilt from https://github.com/PurpleI2P/MiniUPnP-for-Android-Prebuilt
         MINIUPNP_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt
         MINIUPNPC_LIB_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt/miniupnpc-2.0/armeabi-v7a/lib
 
         IFADDRS_PATH = $$MAIN_PATH/android-ifaddrs-from-android-source
-        BDB_PATH = $$MAIN_PATH/db-4.8.30.NC/build_unix
+        BDB_PATH = $$MAIN_PATH/db-6.0.20/build_unix
 
         #added QRENCODE from https://fukuchi.org/works/qrencode/
         #to configure for android arm run ./configure --host=arm-linux --disable-shared

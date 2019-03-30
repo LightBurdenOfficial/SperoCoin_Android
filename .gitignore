@@ -1,4 +1,6 @@
 build_release_5.11/*.*
+Release/*
+Debug/*
 src/obj/*.o
 src/obj/*.P
 src/obj-test/*.o
@@ -13,3 +15,8 @@ src/leveldb/libleveldb.a
 src/leveldb/libmemenv.a
 src/qt/locale/*.qm
 SperoCoin-qt.pro.user
+SperoCoin-qt.pro.user.bf3be79
+android/local.properties~
+android/local.properties
+android/gradle.properties~
+android/gradle.properties
