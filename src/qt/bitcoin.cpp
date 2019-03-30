@@ -218,6 +218,15 @@ app.setOrganizationName("SperoCoin");
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
 //Adição da Intro
 
+
+//PAYMENTSERVER
+// Do this early as we don't want to bother initializing if we are just calling IPC
+    // ... but do it after creating app, so QCoreApplication::arguments is initialized:
+    if (PaymentServer::ipcSendCommandLine())
+       exit(0);
+   PaymentServer* paymentServer = new PaymentServer(&app);
+//PAYMENTSERVER
+
     // ... then bitcoin.conf:
     if (!boost::filesystem::is_directory(GetDataDir(false)))
     {
@@ -271,11 +280,14 @@ app.setOrganizationName("SperoCoin");
 
         BitcoinGUI window;
         guiref = &window;
+        //if(AppInit2(argc, argv))
         if(AppInit2())
         {
             {
                 // Put this in a block, so that the Model objects are cleaned up before
                 // calling Shutdown().
+
+                paymentServer->setOptionsModel(&optionsModel);
 
                 if (splashref)
                     splash.finish(&window);
@@ -295,6 +307,10 @@ app.setOrganizationName("SperoCoin");
                 {
                     window.show();
                 }
+                // Now that initialization/startup is done, process any command-line
+                // bitcoin: URIs
+                QObject::connect(paymentServer, SIGNAL(receivedURI(QString)), &window, SLOT(handleURI(QString)));
+                QTimer::singleShot(100, paymentServer, SLOT(uiReady()));
 
                 // Place this here as guiref has to be defined if we don't want to lose URIs
                 ipcInit(argc, argv);
