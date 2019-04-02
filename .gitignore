@@ -1,6 +1,8 @@
 build_release_5.11/*.*
 Release/*
 Debug/*
+android-build/*
+build/*
 src/obj/*.o
 src/obj/*.P
 src/obj-test/*.o
@@ -20,3 +22,12 @@ android/local.properties~
 android/local.properties
 android/gradle.properties~
 android/gradle.properties
+keystore/*
+.qmake.stash
+android-libSperoCoin-qt.so-deployment-settings.json
+app_process
+libc.so
+libSperoCoin-qt.so
+linker
+Makefile
+qrc_bitcoin.cpp

@@ -29,7 +29,7 @@ USE_LEVELDB=1
 USE_QRCODE=1
 #USE_ASM=1
 
-QMAKE_CXXFLAGS=-fstack-protector-strong -DANDROID -fno-builtin-memmove --sysroot=E:/Android/AndroidNDK/android-ndk-r10d/platforms/android-9/arch-arm -std=c++11
+QMAKE_CXXFLAGS=-fstack-protector-strong -DANDROID -fno-builtin-memmove --sysroot=E:/Android/android-ndk-r10d/platforms/android-9/arch-arm -std=c++11
 
 BOOST_LIB_SUFFIX=-gcc-mt-s-1_57
 
@@ -49,7 +49,7 @@ android {
         # change to your own path, where you will store all needed libraries with 'git clone' commands below.
         MAIN_PATH = E:/Android/deps
         # change to your own Android NDK path
-        NDK_PATH = E:/Android/AndroidNDK/android-ndk-r10d
+        NDK_PATH = E:/Android/android-ndk-r10d
 
         # git clone https://github.com/PurpleI2P/MiniUPnP-for-Android-Prebuilt.git
         # git clone git@github.com:hypnosis-i2p/android-ifaddrs-from-android-source.git
@@ -57,7 +57,7 @@ android {
         BOOST_INCLUDE_PATH = $$MAIN_PATH/boost_1_57_0
         BOOST_PATH = $$MAIN_PATH/boost_1_57_0
         #/stage/lib
-        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2
+        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2r
 
         #MINIUPNPC Prebuilt from https://github.com/PurpleI2P/MiniUPnP-for-Android-Prebuilt
         MINIUPNP_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt
@@ -120,17 +120,17 @@ android {
                 LIBS += -L$$BOOST_PATH/boost_1_62_0/x86/lib \
                         -lboost_system-gcc-mt-1_62 -lboost_date_time-gcc-mt-1_62 \
                         -lboost_filesystem-gcc-mt-1_62 -lboost_program_options-gcc-mt-1_62 \
-                        -L$$OPENSSL_PATH/openssl-1.1.0/x86/lib/ -lcrypto -lssl
+                        -L$$OPENSSL_PATH/openssl-1.0.2r/x86/lib/ -lcrypto -lssl
 #\
 #           -L$$MINIUPNP_PATH/miniupnpc-2.0/x86/lib/ -lminiupnpc
 
-                PRE_TARGETDEPS += $$OPENSSL_PATH/openssl-1.1.0/x86/lib/libcrypto.a \
-                        $$OPENSSL_PATH/openssl-1.1.0/x86/lib/libssl.a
+                PRE_TARGETDEPS += $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libcrypto.a \
+                        $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libssl.a
 
-                DEPENDPATH += $$OPENSSL_PATH/openssl-1.1.0/include
+                DEPENDPATH += $$OPENSSL_PATH/openssl-1.0.2r/include
 
-                ANDROID_EXTRA_LIBS += $$OPENSSL_PATH/openssl-1.1.0/x86/lib/libcrypto_1_0_0.so \
-                        $$OPENSSL_PATH/openssl-1.1.0/x86/lib/libssl_1_0_0.so
+                ANDROID_EXTRA_LIBS += $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libcrypto_1_0_0.so \
+                        $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libssl_1_0_0.so
 #\
 #           $$MINIUPNP_PATH/miniupnpc-2.0/x86/lib/libminiupnpc.so
         }
@@ -556,6 +556,13 @@ android {
 }
 
 DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
