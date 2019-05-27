@@ -51,15 +51,15 @@ android {
         # change to your own Android NDK path
         NDK_PATH = E:/Android/android-ndk-r10d
 
-        # git clone https://github.com/PurpleI2P/MiniUPnP-for-Android-Prebuilt.git
-        # git clone git@github.com:hypnosis-i2p/android-ifaddrs-from-android-source.git
+        # git clone https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt.git
+        # git clone https://github.com/nonlinear-chaos/android-ifaddrs-from-android-source.git
         #boost 53, 62 are not ok
         BOOST_INCLUDE_PATH = $$MAIN_PATH/boost_1_57_0
         BOOST_PATH = $$MAIN_PATH/boost_1_57_0
         #/stage/lib
         OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2r
 
-        #MINIUPNPC Prebuilt from https://github.com/PurpleI2P/MiniUPnP-for-Android-Prebuilt
+        #MINIUPNPC Prebuilt from https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt
         MINIUPNP_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt
         MINIUPNPC_LIB_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt/miniupnpc-2.0/armeabi-v7a/lib
 
