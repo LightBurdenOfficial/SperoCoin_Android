@@ -18,6 +18,9 @@ msys-base-bin
 msys-libtool-bin
 -Clique em Installation, Apply Changes, Apply. Após a conclusão da instalação, clique em Close e feche o MinGW Installation Manager.
 
+-Baixe o arquivo http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.9.2/threads-posix/dwarf/i686-4.9.2-release-posix-dwarf-rt_v3-rev1.7z/download
+-Extraia a pasta mingw32 e a mova para o disco C:, ficando o caminho C:\mingw32.
+
 1.3 Instalando o qt-5.4.0 para Android
 -Baixe o arquivo: https://download.qt.io/archive/qt/5.4/5.4.0/qt-opensource-windows-x86-android-5.4.0.exe
 -Execute o instalador
@@ -32,14 +35,14 @@ msys-libtool-bin
 
 1.5 Instalar o Android SDK
 -Baixar https://dl.google.com/android/installer_r24.0.2-windows.exe
--Definir para pasta E:\SperoCoin-CORE-Android\sdk
+-Definir para pasta C:\sdk
 -Executar SDK Manager.exe
 -Instalar Android SDK Tools 25.2.5, Android SDK Platform-tools 28.0.2, Android SDK Build-tools 21.1.2, Google USB driver, SDK Plaform 28(Android 9 - API 28), SDK Platform 21(Android 5.0.1 - API 21, Google API 21, ARM EABI v7a System Image
 
 1.6 Instalar o Android NDK
 -Baixar https://dl.google.com/android/ndk/android-ndk-r10d-windows-x86_64.exe
--Instale na pasta E:\SperoCoin-CORE-Android\android-ndk-r10d (o arquivo android-ndk-r10d-windows-x86_64.exe é um arquivo de extração automática que pode ser descompactado na pasta atual clicando duas vezes, por isso é melhor abrir o 7-zip e selecionar extrair)
--Adicione o caminho E:\SperoCoin-CORE-Android\android-ndk-r10d\toolchains\arm-linux-androideabi-4.9\prebuilt\windows-x86_64\bin para a variável de sistema PATH
+-Instale na pasta C:\NDK (o arquivo android-ndk-r10d-windows-x86_64.exe é um arquivo de extração automática que pode ser descompactado na pasta atual clicando duas vezes, por isso é melhor abrir o 7-zip e selecionar extrair)
+-Adicione o caminho C:\NDK\toolchains\arm-linux-androideabi-4.9\prebuilt\windows-x86_64\bin para a variável de sistema PATH
 Descrição detalhada de como fazer isso no Windows 8, Windows 7, Windows XP e Windows Vista
 https://www.java.com/ru/download/help/path.xml
 (Não precisa executar o último item desta declaração "Reabra a janela de comando e execute o código java".)
@@ -54,34 +57,34 @@ gcc version 4.9 20140827 (prerelease) (GCC)
 1.7 Instale o Apache Ant
 -Visite o site https://archive.apache.org/dist/ant/binaries/
 -Baixe o arquivo com o programa: https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.4-bin.zip
--Descompacte a pasta E:\SperoCoin-CORE-Android\apache-ant-1.9.4
+-Descompacte a pasta C:\deps\apache-ant-1.9.4
 
 1.8 Adicionar novas variáveis ​​do sistema (elas são necessárias apenas para o item 2. Construindo dependências, depois disso elas podem ser removidas)
 -Clique com o botão direito do mouse em "Computador", no menu que é aberto, clique em "Propriedades", em "Configurações avançadas do sistema" e em "Variáveis ​​de ambiente".
 https://yadi.sk/i/GnG9HiGme46oi
 -Nas "Variáveis ​​do sistema", clique em "Novo" (abaixo será uma lista de "variável e seu valor")
-ANDROID_DEV /e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/usr
-AR /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar
-AS /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-as
-CC /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-gcc
-CFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/
-CPP /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-cpp
-CPPFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/
-CXX /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++
-CXXFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/ -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include
-LD /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ld
-NDK_PROJECT_PATH E:\SperoCoin-CORE-Android\android-ndk-r10d
-RANLIB /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ranlib
+ANDROID_DEV /c/NDK/platforms/android-9/arch-arm/usr
+AR /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar
+AS /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-as
+CC /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-gcc
+CFLAGS --sysroot=/c/NDK/platforms/android-9/arch-arm/
+CPP /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-cpp
+CPPFLAGS --sysroot=/c/NDK/platforms/android-9/arch-arm/
+CXX /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++
+CXXFLAGS --sysroot=/c/NDK/platforms/android-9/arch-arm/ -I/c/NDK/sources/cxx-stl/gnu-libstdc++/4.9/include -I/c/NDK/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include
+LD /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ld
+NDK_PROJECT_PATH C:\NDK
+RANLIB /c/NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ranlib
 
 2. Construa dependências.
-No manual, todas as dependências são salvas na pasta E:\SperoCoin-CORE-Android\deps
+No manual, todas as dependências são salvas na pasta C:\deps
 
 2.1 OpenSSL 
 -Baixar https://www.openssl.org/source/openssl-1.0.2r.tar.gz
 -Navegue até a pasta C:\MinGW\msys\1.0 e execute o arquivo msys.bat
 No shell MinGw, execute o seguinte código:
 
-cd /e/SperoCoin-CORE-Android/deps/
+cd /c/deps/
 tar xvfz openssl-1.0.2r.tar.gz
 cd openssl-1.0.2r
 Configure no-shared no-dso android-armv7
@@ -91,7 +94,7 @@ make
 -Baixar https://download.oracle.com/berkeley-db/db-6.0.20.tar.gz
 -No shell MinGw, execute o seguinte código:
 
-cd /e/SperoCoin-CORE-Android/deps/
+cd /c/deps/
 tar xvfz db-6.0.20.tar.gz
 cd db-6.0.20/build_unix
 ../dist/configure --host=arm-none-linux --enable-cxx --disable-shared --disable-replication
@@ -99,13 +102,13 @@ make
 
 2.3 Boost
 -Baixar https://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.7z/download
--Descompacte o arquivo boost_1_57_0.7z na pasta E:\SperoCoin-CORE-Android\deps
+-Descompacte o arquivo boost_1_57_0.7z na pasta C:\deps
 -Abra um prompt de comando do Windows e execute o seguinte código:
 
-cd E:\SperoCoin-CORE-Android\deps\boost_1_57_0
+cd C:\deps\boost_1_57_0
 bootstrap.bat
 
-Não feche o prompt de comando. Abra o arquivo E:\SperoCoin-CORE-Android\deps\boost_1_57_0\project-config.jam em um editor de texto, exclua seu conteúdo, cole o seguinte texto
+Não feche o prompt de comando. Abra o arquivo C:\deps\boost_1_57_0\project-config.jam em um editor de texto, exclua seu conteúdo, cole o seguinte texto
 
 import option ;
   
@@ -117,9 +120,9 @@ e salve o arquivo
 
 Volte para a linha de comando e digite:
 
-b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc-arm variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\libs\armeabi\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\platforms\android-9\arch-arm\usr\include
+b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc-arm variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\include include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\libs\armeabi\include include=C:\NDK\platforms\android-9\arch-arm\usr\include
 
-Depois de executar este comando, os seguintes arquivos devem aparecer na pasta E:\SperoCoin-CORE-Android\deps\boost_1_57_0\stage\lib:
+Depois de executar este comando, os seguintes arquivos devem aparecer na pasta C:\deps\boost_1_57_0\stage\lib:
 libboost_atomic-gcc-mt-s-1_57.a
 libboost_chrono-gcc-mt-s-1_57.a
 libboost_filesystem-gcc-mt-s-1_57.a
@@ -127,126 +130,56 @@ libboost_program_options-gcc-mt-s-1_57.a
 libboost_system-gcc-mt-s-1_57.a
 libboost_thread_pthread-gcc-mt-s-1_57.a
 
-2.4 LevelDB
--Visite o site https://github.com/DigitalCoin1/SperoCoin_Android 
--Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
-
-cd /e/SperoCoin-CORE-Android/SperoCoin_Android/src/leveldb
-chmod +x build_detect_platform
-make clean
-TARGET_OS=OS_ANDROID_CROSSCOMPILE make libleveldb.a libmemenv.a
-
-2.5 ifaddrs
+2.4 ifaddrs
 -Visite o site https://github.com/nonlinear-chaos/android-ifaddrs-from-android-source
 -Clique Download ZIP
--Abra o arquivo android-ifaddrs-master.zip, extraia-os para E:\deps\android-ifaddrs-from-android-source
+-Abra o arquivo android-ifaddrs-master.zip, extraia-os para C:\deps\ifaddrs
 
-2.6 MiniUPnP
+2.5 MiniUPnP
 -Visite o site https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt
 -Clique em Download ZIP
--Abra o arquivo MiniUPnP-for-Android-Prebuilt-master.zip e extraia a pasta miniupnpc-2.0 para E:\deps\MiniUPnP-for-Android-Prebuilt\
+-Abra o arquivo MiniUPnP-for-Android-Prebuilt-master.zip e extraia a pasta miniupnpc-2.0 para C:\deps\MiniUpnP
 
-2.7 QR
+2.6 QR
 -Baixe o arquivo http://download.sourceforge.net/libpng/libpng-1.6.16.tar.gz
--Descompate o arquivo em E:\SperoCoin-CORE-Android\deps
+-Descompate o arquivo em C:\deps
 -Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
 
-cd /e/SperoCoin-CORE-Android/deps/libpng-1.6.16
+cd /c/deps/libpng-1.6.16
 configure --host=arm-linux --disable-shared
 make
 cp .libs/libpng16.a .libs/libpng.a
 
 -Baixe o arquivo https://fukuchi.org/works/qrencode/
--Descompate o arquivo em E:\SperoCoin-CORE-Android\deps
+-Descompate o arquivo em C:\deps
 -Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
 
-cd /e/SperoCoin-CORE-Android/deps/qrencode-4.0.2
+cd /c/deps/qrencode-4.0.2
 
-LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/i686-w64-mingw32/lib/libz.a" \
+LIBS="../libpng-1.6.16/.libs/libpng.a ../../NDK/platforms/android-21/arch-arm/usr/lib/libz.a" \
 png_CFLAGS="-I../libpng-1.6.16" \
 png_LIBS="-L../libpng-1.6.16/.libs" \
-configure --host=arm-linux --disable-shared
+configure --host=arm-linux --enable-static --disable-shared --without-tools
 
 make
 
 3. Compilação
-3.1 Nós coletamos Novacoin QT
+3.1 Baixe o Source da SperoCoin
+https://github.com/DigitalCoin1/SperoCoin_Android
 
-Abra o arquivo novacoin-qt.pro
-Em vez de
-
-#BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
-#BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
-#BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
-#BDB_INCLUDE_PATH=C:/deps/db-6.0.20/build_unix
-#BDB_LIB_PATH=C:/deps/db-6.0.20/build_unix
-#OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1j/include
-#OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1j
-
-insira 
-
-USE_IPV6=0
-USE_LEVELDB=1
-USE_ASM=1
-
-BOOST_LIB_SUFFIX=-gcc-mt-s-1_57
-BOOST_INCLUDE_PATH=C:/Android/deps/boost_1_57_0
-BOOST_LIB_PATH=C:/Android/deps/boost_1_57_0/stage/lib
-BDB_INCLUDE_PATH=C:/Android/deps/db-6.0.20/build_unix
-BDB_LIB_PATH=C:/Android/deps/db-6.0.20/build_unix
-OPENSSL_INCLUDE_PATH=C:/Android/deps/openssl-1.0.2/include
-OPENSSL_LIB_PATH=C:/Android/deps/openssl-1.0.2
-
-Ao invés disso
-
-!windows|contains(USE_BUILD_INFO, 1) {
-    genbuild.depends = FORCE
-    genbuild.commands = cd $$PWD; /bin/sh share/genbuild.sh $$OUT_PWD/build/build.h
-    genbuild.target = $$OUT_PWD/build/build.h
-    PRE_TARGETDEPS += $$OUT_PWD/build/build.h
-    QMAKE_EXTRA_TARGETS += genbuild
-    DEFINES += HAVE_BUILD_INFO
-}
-
-insira
-
-#!windows|contains(USE_BUILD_INFO, 1) {
-#    genbuild.depends = FORCE
-#    genbuild.commands = cd $$PWD; /bin/sh share/genbuild.sh $$OUT_PWD/build/build.h
-#    genbuild.target = $$OUT_PWD/build/build.h
-#    PRE_TARGETDEPS += $$OUT_PWD/build/build.h
-#    QMAKE_EXTRA_TARGETS += genbuild
-#    DEFINES += HAVE_BUILD_INFO
-#}
-
-Depois linha src/irc.h \ insira src/ifaddrs.h \ 
-(isto é, para ficar assim:
-src/irc.h \
-src/ifaddrs.h \
-src/mruset.h \
-)
-
-Em seguida, execute o comando src/qt/transactiontablemodel.cpp \ instage src / ifaddrs.c \
-
-Comente na linha 434 LIBS += -lrt
-(isto é, para ficar assim:
-!windows:!macx {
-    DEFINES += LINUX
-#    LIBS += -lrt
-}
-)
-
-Alterar linha
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
-de
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread_pthread$$BOOST_THREAD_LIB_SUFFIX
+3.2 LevelDB
+-Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
+cd /c/SperoCoin_Android/src/leveldb
+chmod +x build_detect_platform
+make clean
+TARGET_OS=OS_ANDROID_CROSSCOMPILE make libleveldb.a libmemenv.a
 
 -Abra o arquivo C:\Qt\Qt5.4.0\Tools\QtCreator\bin\qtcreator.exe
 -Clique em "Tools" -> "Options..." e selecione a guia Android
 -Cole C:\Program Files\Java\jdk1.8.0_201 na linha "JDK location"
--Insira na linha "Android SDK location" E:\SperoCoin-CORE-Android\sdk
--Cole E:\SperoCoin-CORE-Android\android-ndk-r10d na linha "Android NDK location"
--Insira a linha "Ant executable": E:\SperoCoin-CORE-Android\apache-ant-1.9.4\bin\ant.bat
+-Insira na linha "Android SDK location" C:\SDK
+-Cole C:\NDK na linha "Android NDK location"
+-Insira a linha "Ant executable": C:\deps\apache-ant-1.9.4\bin\ant.bat
 -Clique em "OK"
 -Clique em "File" -> "Open File or Project..."
 -Encontre "SperoCoin-qt.pro" e clique em "Open"
@@ -254,36 +187,35 @@ LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -l
 -Clique em "Manage Project"
 -Clique em "Projects" -> "Build Android APK" -> "Create Templates" (imagem para entender melhor https://yadi.sk/i/M8mhG2tce4cEy)
 -Clique em "Finish"
--No projeto novacoin-qt, selecione Outros arquivos-> android-> AndroidManifest.xml e especifique o nome do pacote, o nome do aplicativo, os ícones do aplicativo (os ícones estão na pasta E:\SperoCoin-CORE-Android\novacoin-master\src\qt\res\icons) O ícone do Google Play Market deve ter pelo menos 512 x 512) (https://yadi.sk/i/oY-OmnrWe4cTY)
--Pegue o seu telefone / tablet Android (a versão deve ser de 2.3 e superior)
+-No projeto SperoCoin-qt, selecione Outros arquivos-> android-> AndroidManifest.xml e especifique o nome do pacote, o nome do aplicativo, os ícones do aplicativo (os ícones estão na pasta C:\SperoCoin_Android-master\src\qt\res\icons) O ícone do Google Play Market deve ter pelo menos 512 x 512) (https://yadi.sk/i/oY-OmnrWe4cTY)
+-Pegue o seu telefone/tablet Android (a versão deve ser de 5.0 e/ou superior)
 -Vá para "Configurações" -> "Aplicativos".
 -Marque a caixa "Fontes desconhecidas"
 -Vá para "Desenvolvimento"
 -Marque a caixa ao lado de "Depuração USB"
 -Conecte seu telefone/tablet ao seu computador via USB. Não selecione a opção "Ativar armazenamento USB" no seu telefone/tablet.
 -Deve haver um dispositivo Android. https://yadi.sk/i/wFWZLxtie4DrN
-Se o Windows não encontrar o driver do dispositivo, selecione a pasta E:\SperoCoin-CORE-Android\sdk\extras\google\usb_driver android_winusb.inf
+Se o Windows não encontrar o driver do dispositivo, selecione a pasta C:\sdk\extras\google\usb_driver android_winusb.inf
 -No QtCreator, clique no robô verde e selecione Build: Release
 -Clique na seta verde (Executar) (https://yadi.sk/i/hKHKL_Phe4EFL)
 -Selecione seu telefone/tablet, clique em OK e aguarde a conclusão da compilação.
--Após a conclusão da compilação, o Novacoin-Qt será instalado no seu telefone/tablet e lançado. E na pasta E:\SperoCoin-CORE-Android\build-novacoin-qt-Android_armeabi_v7a_GCC_4_9_Qt_5_4_0-Release\android-build\ bin será o arquivo QtApp-debug.apk. Renomeie para Novacoin-Qt-0.5.1-debug.apk e pode ser distribuído :)
 
 Alterações no Android X86
-1. Adicione o caminho E:\SperoCoin-CORE-Android\android-ndk-r10d\toolchains\x86-4.9\prebuilt\windows-x86_64\bin à variável PATH
+1. Adicione o caminho C:\NDK\toolchains\x86-4.9\prebuilt\windows-x86_64\bin à variável PATH
 2. Altere as variáveis ​​do sistema da seguinte forma:
 
-ANDROID_DEV /e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/usr
-AR /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ar
-AS /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-as
-CC /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-gcc
-CFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/
-CPP /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-cpp
-CPPFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/
-CXX /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-g++
-CXXFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/ -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include
-LD /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ld
-NDK_PROJECT_PATH E:\SperoCoin-CORE-Android\android-ndk-r10d
-RANLIB /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ranlib
+ANDROID_DEV /c/NDK/platforms/android-9/arch-x86/usr
+AR /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ar
+AS /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-as
+CC /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-gcc
+CFLAGS --sysroot=/c/NDK/platforms/android-9/arch-x86/
+CPP /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-cpp
+CPPFLAGS --sysroot=/c/NDK/platforms/android-9/arch-x86/
+CXX /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-g++
+CXXFLAGS --sysroot=/c/NDK/platforms/android-9/arch-x86/ -I/c/NDK/sources/cxx-stl/gnu-libstdc++/4.9/include -I/c/NDK/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include
+LD /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ld
+NDK_PROJECT_PATH C:\NDK
+RANLIB /c/NDK/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ranlib
 
 3. Ao construir a execução do OpenSSL
 Configure no-shared no-dso android-x86
@@ -301,10 +233,10 @@ em vez de
 using gcc : arm : arm-linux-androideabi-g++.exe ;
 
 e executar
-b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\libs\x86\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\platforms\android-9\arch-x86\usr\include
+b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\include include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\libs\x86\include include=C:\NDK\platforms\android-9\arch-x86\usr\include
 
 em vez de
 
-b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc-arm variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\sources\cxx-stl\gnu-libstdc++\4.9\libs\armeabi\include include=E:\SperoCoin-CORE-Android\android-ndk-r10d\platforms\android-9\arch-arm\usr\include
+b2 --build-type=complete --with-chrono --with-filesystem --with-program_options --with-system --with-thread toolset=gcc-arm variant=release link=static threading=multi threadapi=pthread target-os=android define=BOOST_MATH_DISABLE_FLOAT128 include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\include include=C:\NDK\sources\cxx-stl\gnu-libstdc++\4.9\libs\armeabi\include include=C:\NDK\platforms\android-9\arch-arm\usr\include
 
 6. No QtCreator, escolha Android para X86 em vez de Android para armeabi-v7a
