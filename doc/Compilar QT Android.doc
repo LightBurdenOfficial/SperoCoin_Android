@@ -60,18 +60,18 @@ gcc version 4.9 20140827 (prerelease) (GCC)
 -Clique com o botão direito do mouse em "Computador", no menu que é aberto, clique em "Propriedades", em "Configurações avançadas do sistema" e em "Variáveis ​​de ambiente".
 https://yadi.sk/i/GnG9HiGme46oi
 -Nas "Variáveis ​​do sistema", clique em "Novo" (abaixo será uma lista de "variável e seu valor")
-ANDROID_DEV /e/Android/android-ndk-r10d/platforms/android-9/arch-arm/usr
-AR /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar
-AS /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-as
-CC /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-gcc
-CFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-arm/
-CPP /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-cpp
-CPPFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-arm/
-CXX /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++
-CXXFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-arm/ -I/e/Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include
-LD /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ld
+ANDROID_DEV /e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/usr
+AR /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar
+AS /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-as
+CC /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-gcc
+CFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/
+CPP /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-cpp
+CPPFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/
+CXX /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-g++
+CXXFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-arm/ -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi-v7a/include
+LD /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ld
 NDK_PROJECT_PATH E:\SperoCoin-CORE-Android\android-ndk-r10d
-RANLIB /e/Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ranlib
+RANLIB /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ranlib
 
 2. Construa dependências.
 No manual, todas as dependências são salvas na pasta E:\SperoCoin-CORE-Android\deps
@@ -81,7 +81,7 @@ No manual, todas as dependências são salvas na pasta E:\SperoCoin-CORE-Android
 -Navegue até a pasta C:\MinGW\msys\1.0 e execute o arquivo msys.bat
 No shell MinGw, execute o seguinte código:
 
-cd /e/Android/deps/
+cd /e/SperoCoin-CORE-Android/deps/
 tar xvfz openssl-1.0.2r.tar.gz
 cd openssl-1.0.2r
 Configure no-shared no-dso android-armv7
@@ -91,7 +91,7 @@ make
 -Baixar https://download.oracle.com/berkeley-db/db-6.0.20.tar.gz
 -No shell MinGw, execute o seguinte código:
 
-cd /e/Android/deps/
+cd /e/SperoCoin-CORE-Android/deps/
 tar xvfz db-6.0.20.tar.gz
 cd db-6.0.20/build_unix
 ../dist/configure --host=arm-none-linux --enable-cxx --disable-shared --disable-replication
@@ -131,7 +131,7 @@ libboost_thread_pthread-gcc-mt-s-1_57.a
 -Visite o site https://github.com/DigitalCoin1/SperoCoin_Android 
 -Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
 
-cd /e/Android/SperoCoin_Android/src/leveldb
+cd /e/SperoCoin-CORE-Android/SperoCoin_Android/src/leveldb
 chmod +x build_detect_platform
 make clean
 TARGET_OS=OS_ANDROID_CROSSCOMPILE make libleveldb.a libmemenv.a
@@ -151,7 +151,7 @@ TARGET_OS=OS_ANDROID_CROSSCOMPILE make libleveldb.a libmemenv.a
 -Descompate o arquivo em E:\SperoCoin-CORE-Android\deps
 -Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
 
-cd /e/Android/deps/libpng-1.6.16
+cd /e/SperoCoin-CORE-Android/deps/libpng-1.6.16
 configure --host=arm-linux --disable-shared
 make
 cp .libs/libpng16.a .libs/libpng.a
@@ -160,7 +160,7 @@ cp .libs/libpng16.a .libs/libpng.a
 -Descompate o arquivo em E:\SperoCoin-CORE-Android\deps
 -Abra o shell do MinGW (C:\MinGW\msys\1.0\msys.bat) e execute o seguinte código:
 
-cd /e/Android/deps/qrencode-4.0.2
+cd /e/SperoCoin-CORE-Android/deps/qrencode-4.0.2
 
 LIBS="../libpng-1.6.16/.libs/libpng.a ../../mingw32/i686-w64-mingw32/lib/libz.a" \
 png_CFLAGS="-I../libpng-1.6.16" \
@@ -272,18 +272,18 @@ Alterações no Android X86
 1. Adicione o caminho E:\SperoCoin-CORE-Android\android-ndk-r10d\toolchains\x86-4.9\prebuilt\windows-x86_64\bin à variável PATH
 2. Altere as variáveis ​​do sistema da seguinte forma:
 
-ANDROID_DEV /e/Android/android-ndk-r10d/platforms/android-9/arch-x86/usr
-AR /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ar
-AS /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-as
-CC /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-gcc
-CFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-x86/
-CPP /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-cpp
-CPPFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-x86/
-CXX /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-g++
-CXXFLAGS --sysroot=/e/Android/android-ndk-r10d/platforms/android-9/arch-x86/ -I/e/Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include
-LD /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ld
+ANDROID_DEV /e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/usr
+AR /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ar
+AS /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-as
+CC /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-gcc
+CFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/
+CPP /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-cpp
+CPPFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/
+CXX /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-g++
+CXXFLAGS --sysroot=/e/SperoCoin-CORE-Android/android-ndk-r10d/platforms/android-9/arch-x86/ -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/include -I/e/SperoCoin-CORE-Android/android-ndk-r10d/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include
+LD /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ld
 NDK_PROJECT_PATH E:\SperoCoin-CORE-Android\android-ndk-r10d
-RANLIB /e/Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ranlib
+RANLIB /e/SperoCoin-CORE-Android/android-ndk-r10d/toolchains/x86-4.9/prebuilt/windows-x86_64/bin/i686-linux-android-ranlib
 
 3. Ao construir a execução do OpenSSL
 Configure no-shared no-dso android-x86
