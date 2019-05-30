@@ -236,6 +236,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     rpcConsole = new RPCConsole(this);
     connect(openRPCConsoleAction, SIGNAL(triggered()), rpcConsole, SLOT(show()));
+    connect(showBackupsAction, SIGNAL(triggered()), rpcConsole, SLOT(showBackups()));
 
     // Clicking on "Verify Message" in the address book sends you to the verify message tab
     connect(addressBookPage, SIGNAL(verifyMessage(QString)), this, SLOT(gotoVerifyMessageTab(QString)));
@@ -348,6 +349,8 @@ void BitcoinGUI::createActions()
 //    stakeReportAction = new QAction(QIcon(":/icons/history"), tr("&Show stake report"), this);
 //    stakeReportAction->setToolTip(tr("Open the Stake Report Box"));
 //Remoção do Stake Report - Alteração para Android - Francis Santana
+    showBackupsAction = new QAction(QIcon(":/icons/browse"), tr("Show Automatic &Backups"), this);
+    showBackupsAction->setToolTip(tr("Show automatically created wallet backups"));
     exportAction = new QAction(QIcon(":/icons/export"), tr("&"), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
@@ -391,6 +394,8 @@ void BitcoinGUI::createMenuBar()
     //file->addAction(stakeReportAction);   // ** em52
 //    file->addSeparator();
     //Remoção do Stake Report - Alteração para Android - Francis Santana
+    file->addAction(showBackupsAction);
+    file->addSeparator();
     file->addAction(quitAction);
 
     QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
@@ -530,6 +535,7 @@ void BitcoinGUI::createTrayIcon()
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(optionsAction);
     trayIconMenu->addAction(openRPCConsoleAction);
+    trayIconMenu->addAction(showBackupsAction);
 #ifndef Q_OS_MAC // This is built-in on Mac
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);

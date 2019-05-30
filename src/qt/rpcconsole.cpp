@@ -442,6 +442,11 @@ void RPCConsole::on_openConfigurationfileButton_clicked()
     GUIUtil::openConfigfile();
 }
 
+void RPCConsole::showBackups()
+{
+    GUIUtil::showBackups();
+}
+
 void RPCConsole::scrollToEnd()
 {
     QScrollBar *scrollbar = ui->messagesWidget->verticalScrollBar();

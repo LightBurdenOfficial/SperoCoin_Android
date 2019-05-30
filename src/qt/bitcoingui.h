@@ -111,6 +111,7 @@ private:
 //Remoção do Stake Report - Alteração para Android - Francis Santana
 //    QAction *stakeReportAction;
 //Remoção do Stake Report - Alteração para Android - Francis Santana
+    QAction *showBackupsAction;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
