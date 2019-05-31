@@ -394,7 +394,7 @@ void BitcoinGUI::createMenuBar()
     //file->addAction(stakeReportAction);   // ** em52
 //    file->addSeparator();
     //Remoção do Stake Report - Alteração para Android - Francis Santana
-    file->addAction(showBackupsAction);
+    /*file->addAction(showBackupsAction);*/
     file->addSeparator();
     file->addAction(quitAction);
 

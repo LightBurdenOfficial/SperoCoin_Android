@@ -313,7 +313,7 @@ void showBackups()
 
     /* Open folder with default browser */
     if (boost::filesystem::exists(pathBackups))
-        QDesktopServices::openUrl(QUrl::fromLocalFile(QString::fromStdString(pathBackups.string())));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathBackups)));
 }
 //Adição da Intro
 ToolTipToRichTextFilter::ToolTipToRichTextFilter(int size_threshold, QObject *parent) :
