@@ -1117,11 +1117,8 @@ void createConf()
     + "\nrpcallowip=*"
     + "\ntestnet=0"
     + "\n# MainNet"
-    + "\naddnode=35.198.22.94:55680"
-    + "\naddnode=sperocoin.ddns.net:55680"
-    + "\naddnode=167.114.103.43:55680"
-    + "\naddnode=104.248.225.117:55680"
-    + "\naddnode=45.195.201.179:55680";
+    + "\naddnode=seed1.sperocoin.org:55680"
+    + "\naddnode=seed2.sperocoin.org:55680";
    pConf.close();
 }
 

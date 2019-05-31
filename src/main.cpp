@@ -51,7 +51,7 @@ static const int64_t nTargetTimespan = 30 * 60;
 
 static const unsigned int CHECKLOCKTIMEVERIFY_SWITCH_TIME = 1461110400; // Wednesday, 20-Apr-16 00:00:00 UTC
 
-int64_t devCoin = 0 * COIN;
+int64_t devCoin = 0.015 * COIN; // A cada bloco minerado em POW, 0.015 vai para a Equipe SperoCoin.
 int nCoinbaseMaturity = 5;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -1048,7 +1048,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
         nSubsidy = 50000 * COIN; //2% Bounties/Promotions
     }
 
-    if(pindexBest->nHeight > 263250) //Mineracao hibrida PoW+PoS
+    if(pindexBest->nHeight > POS_POW_HIBRID) //Mineracao hibrida PoW+PoS
     {
         nSubsidy = 0.05 * COIN;
     }
@@ -1056,7 +1056,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     // LAST_POW_BLOCK = 33331
 
     if (fDebug && GetBoolArg("-printcreation"))
-    printf("GetProofOfWorkReward() : create=%s nSubsidy=%" PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
+    printf("GetProofOfStakeReward(): create=%s nRewardCoinYear=%"PRId64" nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nRewardCoinYear/CENT,nCoinAge);
     return nSubsidy + nFees;
 
 
@@ -1070,7 +1070,12 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
     int64_t nRewardCoinYear;
 
-    nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
+    if(pindexBest->nHeight < POS_POW_HIBRID){
+        nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
+    }
+    else if(pindexBest->nHeight >= POS_POW_HIBRID){
+        nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE_NEW;
+    }
 
     int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 
@@ -1861,7 +1866,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
                    nReward));
     }
 
-    /*if(IsProofOfWork())
+    if(IsProofOfWork())
     {
         CBitcoinAddress address(!fTestNet ? FOUNDATION : FOUNDATION_TEST);
         CScript scriptPubKey;
@@ -1870,7 +1875,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
             return error("ConnectBlock() : coinbase does not pay to the dev address)");
         if (vtx[0].vout[1].nValue < devCoin)
             return error("ConnectBlock() : coinbase does not pay enough to dev addresss");
-    }*/
+    }
 
     if (IsProofOfStake())
     {
@@ -2456,7 +2461,7 @@ bool CBlock::AcceptBlock()
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
 
-    if (IsProofOfWork() && nHeight > LAST_POW_BLOCK && nHeight <= 263250 && !fTestNet)
+    if (IsProofOfWork() && nHeight > LAST_POW_BLOCK && nHeight <= POS_POW_HIBRID && !fTestNet)
         return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
 
     // Check proof-of-work or proof-of-stake
