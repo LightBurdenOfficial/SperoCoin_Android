@@ -3,16 +3,16 @@
 
 # QT Android Mobile Wallet SperoCoin versão Full Node
 
-[![N|Solid](https://sperocoin.ddns.net/files/footer-logo1.png)](https://sperocoin.ddns.net.net/)
+[![N|Solid](https://i.imgur.com/0BOgWZy.png)](https://sperocoin.org/)
 
-## Versão: 2.6.4.6-BETA Versão Retrato/Portrait
+## Versão: 2.6.4.7-BETA Versão Retrato/Portrait
 
 # SperoCoin Wallet for Android - Full Node Version
 ### Follow the instructions below for a correct installation of our Wallet.
 
 1) Download the application using one of the links below:
 
-> GitHub: https://github.com/DigitalCoin1/SperoCoin_Android/releases/download/SperoCoin-v.2.6.4.6-BETA/SperoCoin-v.2.6.4.6-BETA.apk
+> GitHub: https://github.com/DigitalCoin1/SperoCoin_Android/releases/download/SperoCoin-v.2.6.4.7-BETA/SperoCoin-v.2.6.4.7-BETA.apk
 
 2) Activate the installation of "Unknown Source" in the settings of your device.
 
@@ -42,7 +42,7 @@ Common Errors:
 
 1) Realize o download do aplicativo utilizando um dos links abaixo:
 
-> GitHub: https://github.com/DigitalCoin1/SperoCoin_Android/releases/download/SperoCoin-v.2.6.4.6-BETA/SperoCoin-v.2.6.4.6-BETA.apk
+> GitHub: https://github.com/DigitalCoin1/SperoCoin_Android/releases/download/SperoCoin-v.2.6.4.7-BETA/SperoCoin-v.2.6.4.7-BETA.apk
 
 2) Ative a instalação de "Fonte Desconhecidas" nas configurações de seu aparelho.
 
