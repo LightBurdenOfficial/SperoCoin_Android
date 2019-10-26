@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = SperoCoin-qt
-VERSION = ANDROID-2.6.4.6
+VERSION = ANDROID-2.6.4.9
 INCLUDEPATH += src src/json src/qt
 QT += core gui network androidextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
