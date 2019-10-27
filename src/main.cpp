@@ -1056,7 +1056,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     // LAST_POW_BLOCK = 33331
 
     if (fDebug && GetBoolArg("-printcreation"))
-    printf("GetProofOfStakeReward(): create=%s nRewardCoinYear=%"PRId64" nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nRewardCoinYear/CENT,nCoinAge);
+    printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
     return nSubsidy + nFees;
 
 
@@ -1080,7 +1080,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 
     if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%" PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
+        printf("GetProofOfStakeReward(): create=%s nRewardCoinYear=%"PRId64" nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nRewardCoinYear/CENT,nCoinAge);
 
     return nSubsidy + nFees;
 }
