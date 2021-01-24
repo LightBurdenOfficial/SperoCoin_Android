@@ -29,7 +29,7 @@ USE_LEVELDB=1
 USE_QRCODE=1
 #USE_ASM=1
 
-QMAKE_CXXFLAGS=-fstack-protector-strong -DANDROID -fno-builtin-memmove --sysroot=E:/Android/android-ndk-r10d/platforms/android-9/arch-arm -std=c++11
+QMAKE_CXXFLAGS=-fstack-protector-strong -DANDROID -fno-builtin-memmove --sysroot=C:/Android/android-ndk-r10d/platforms/android-9/arch-arm -std=c++11
 
 BOOST_LIB_SUFFIX=-gcc-mt-s-1_57
 
@@ -47,9 +47,9 @@ android {
         message("Using Android settings")
 
         # change to your own path, where you will store all needed libraries with 'git clone' commands below.
-        MAIN_PATH = E:/Android/deps
+        MAIN_PATH = C:/Android/deps
         # change to your own Android NDK path
-        NDK_PATH = E:/Android/android-ndk-r10d
+        NDK_PATH = C:/Android/android-ndk-r10d
 
         # git clone https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt.git
         # git clone https://github.com/nonlinear-chaos/android-ifaddrs-from-android-source.git
@@ -60,8 +60,8 @@ android {
         OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2r
 
         #MINIUPNPC Prebuilt from https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt
-        MINIUPNP_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt
-        MINIUPNPC_LIB_PATH = $$MAIN_PATH/MiniUPnP-for-Android-Prebuilt/miniupnpc-2.0/armeabi-v7a/lib
+        MINIUPNP_PATH = $$MAIN_PATH/miniupnpc-2.0
+        MINIUPNPC_LIB_PATH = $$MAIN_PATH/miniupnpc-2.0/armeabi-v7a/lib
 
         IFADDRS_PATH = $$MAIN_PATH/android-ifaddrs-from-android-source
         BDB_PATH = $$MAIN_PATH/db-6.0.20/build_unix
@@ -618,11 +618,12 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    android/AndroidManifest.xml \
+    android/build.gradle
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = \
-        $$PWD/../deps/MiniUPnP-for-Android-Prebuilt/miniupnpc-2.0/armeabi-v7a/lib/libminiupnpc.so
+    ANDROID_EXTRA_LIBS = C:/SperoCoin_Android/../Android/deps/miniupnpc-2.0/miniupnpc-2.0/armeabi-v7a/lib/libminiupnpc.so
 }
