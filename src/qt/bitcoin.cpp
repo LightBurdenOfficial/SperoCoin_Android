@@ -11,9 +11,9 @@
 #include "init.h"
 #include "ui_interface.h"
 #include "qtipcserver.h"
-//Adição da Intro
+// COMEÇO DA ADIÇÃO DA INTRO
 #include "intro.h"
-//Adição da Intro
+ // FIM DA ADIÇÃO DA INTRO
 #include "paymentserver.h"
 
 #include <QApplication>
@@ -62,8 +62,7 @@ QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.W
    }
    return true;
 }
-
-//Adição da Intro
+// COMEÇO DA ADIÇÃO DA INTRO
 /** Set up translations */
 static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTranslator, QTranslator &translatorBase, QTranslator &translator)
 {
@@ -96,8 +95,7 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
     if (translator.load(lang_territory, ":/translations/"))
         QApplication::installTranslator(&translator);
 }
-
-
+ // FIM DA ADIÇÃO DA INTRO
 
 static void ThreadSafeMessageBox(const std::string& message, const std::string& caption, int style)
 {
@@ -145,14 +143,9 @@ static void ThreadSafeHandleURI(const std::string& strURI)
 
 static void InitMessage(const std::string &message)
 {
-    //    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "2");
-//    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-        //testing android style
-//        QApplication::setStyle(QStyleFactory::create("android"));
-
     if(splashref)
     {
-        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(255,2,0));
+        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(0,0,0));
         QApplication::instance()->processEvents();
     }
 }
@@ -179,18 +172,30 @@ static void handleRunawayException(std::exception *e)
     exit(1);
 }
 
-
-
 #ifndef BITCOIN_QT_TEST
 int main(int argc, char *argv[])
 {
-         checkPermission();
-        ipcScanRelay(argc, argv);
+    // Do this early as we don't want to bother initializing if we are just calling IPC
+    checkPermission();
+    ipcScanRelay(argc, argv);
 
 #if QT_VERSION < 0x050000
     // Internal string conversion is all UTF-8
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
+#endif
+#if QT_VERSION > 0x050100
+    // Generate high-dpi pixmaps
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+#if QT_VERSION >= 0x050600
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // Address 4K screen resolution: http://doc.qt.io/qt-5/highdpi.html
+    // enable automatic scaling based on the pixel density of the monitor
+    qputenv( "QT_AUTO_SCREEN_SCALE_FACTOR", "1" );
+#endif
+#ifdef MAC_OSX
+    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
     Q_INIT_RESOURCE(bitcoin);
@@ -208,23 +213,25 @@ app.setOrganizationName("SperoCoin");
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
+
     // Command-line options take precedence:
     ParseParameters(argc, argv);
 
-    // User language is set up: pick a data directory
-    Intro::pickDataDirectory();
-
-    // Install global event filter that makes sure that long tooltips can be word-wrapped
-    app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
-//Adição da Intro
+// INÍCIO DA ADIÇÃO DA INTRO
+// User language is set up: pick a data directory
+ Intro::pickDataDirectory();
+ 
+// Install global event filter that makes sure that long tooltips can be word-wrapped      
+ app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));     
+// FIM DA ADIÇÃO DA INTRO
 
 
 //PAYMENTSERVER
 // Do this early as we don't want to bother initializing if we are just calling IPC
     // ... but do it after creating app, so QCoreApplication::arguments is initialized:
     if (PaymentServer::ipcSendCommandLine())
-       exit(0);
-   PaymentServer* paymentServer = new PaymentServer(&app);
+        exit(0);
+    PaymentServer* paymentServer = new PaymentServer(&app);
 //PAYMENTSERVER
 
     // ... then bitcoin.conf:
@@ -262,9 +269,9 @@ app.setOrganizationName("SperoCoin");
     if (GetBoolArg("-splash", true) && !GetBoolArg("-min"))
     {
         splash.show();
-        //Adição da Intro
+        // INÍCIO DA ADIÇÃO DA INTRO
         splash.setAutoFillBackground(true);
-        //Adição da Intro
+        // FIM DA ADIÇÃO DA INTRO
         splashref = &splash;
     }
 
@@ -280,6 +287,8 @@ app.setOrganizationName("SperoCoin");
 
         BitcoinGUI window;
         guiref = &window;
+
+        // Parameters are already parsed by ParseParameters call above
         //if(AppInit2(argc, argv))
         if(AppInit2())
         {
@@ -307,6 +316,7 @@ app.setOrganizationName("SperoCoin");
                 {
                     window.show();
                 }
+
                 // Now that initialization/startup is done, process any command-line
                 // bitcoin: URIs
                 QObject::connect(paymentServer, SIGNAL(receivedURI(QString)), &window, SLOT(handleURI(QString)));

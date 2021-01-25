@@ -27,9 +27,11 @@
 #include "rpcconsole.h"
 #include "wallet.h"
 #include "statisticspage.h"
+//#include "speroexchange.h"
 #include "blockbrowser.h"
 #include "stakereportdialog.h"
 #include "permissions.h"
+#include "charitydialog.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -67,6 +69,10 @@
 #include <QToolButton>
 //Barra de Status como botões
 //#include <QDebug>
+#include <QFont>
+#include <QFontDatabase>
+#include <QTextDocument>
+#include <QDesktopWidget>
 
 #include <iostream>
 //Barra de Status como botões
@@ -115,6 +121,11 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     setUnifiedTitleAndToolBarOnMac(true);
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
+
+   // Carregamento de Fonts
+    QFontDatabase::addApplicationFont(":/fonts/Nasalization");
+
+
     // Accept D&D of URIs
     setAcceptDrops(true);
 
@@ -133,6 +144,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     // Create tabs
     overviewPage = new OverviewPage();
     statisticsPage = new StatisticsPage(this);
+    //speroExchange = new SperoExchange(this);
     blockBrowser = new BlockBrowser(this);
 
     transactionsPage = new QWidget(this);
@@ -149,19 +161,24 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     signVerifyMessageDialog = new SignVerifyMessageDialog(this);
 
+    stakeForCharityDialog = new StakeForCharityDialog(this);
+    charityPage = new StakeForCharityDialog(this);
+
     centralWidget = new QStackedWidget(this);
     centralWidget->addWidget(overviewPage);
     centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
     centralWidget->addWidget(sendCoinsPage);
+    centralWidget->addWidget(stakeForCharityDialog);
+    centralWidget->addWidget(charityPage);
     centralWidget->addWidget(statisticsPage);
+    //centralWidget->addWidget(speroExchange);
     centralWidget->addWidget(blockBrowser);
     setCentralWidget(centralWidget);
 
     // Create status bar
     statusBar();
-
 
     // Status bar notification icons
     QFrame *frameBlocks = new QFrame();
@@ -174,6 +191,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     //Barra de Status como botões
     buttonStakingIcon = new QToolButton(this);
     buttonConnectionsIcon = new QToolButton(this);
+    buttonCharityIcon = new QLabel(this);
     //Barra de Status como botões
     labelBlocksIcon = new QLabel();
     frameBlocksLayout->addStretch();
@@ -183,6 +201,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     frameBlocksLayout->addWidget(buttonStakingIcon);
     frameBlocksLayout->addStretch();
     frameBlocksLayout->addWidget(buttonConnectionsIcon);
+    frameBlocksLayout->addStretch();
+    frameBlocksLayout->addWidget(buttonCharityIcon);
     frameBlocksLayout->addStretch();
     //Barra de Status como botões
     frameBlocksLayout->addWidget(labelBlocksIcon);
@@ -211,7 +231,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     QString curStyle = qApp->style()->metaObject()->className();
     if(curStyle == "QWindowsStyle" || curStyle == "QWindowsVistaStyle")
     {
-        progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
+        progressBar->setStyleSheet("QProgressBar { color: black; background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk {color: black; background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
     }
 
     statusBar()->addWidget(progressBarLabel);
@@ -226,6 +246,14 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     //clicking on connection bar graph generates messagebox
     connect(buttonConnectionsIcon, SIGNAL(clicked()), this, SLOT(clickButtonConnectionsIcon()));
     //Barra de Status como botões
+
+/* Adição de Folha de Estilo */
+    QFile File(":/css/default");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(File.readAll());
+
+    qApp->setStyleSheet(StyleSheet);
+/* Adição de Folha de Estilo */
 
     // Clicking on a transaction on the overview page simply sends you to transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), this, SLOT(gotoHistoryPage()));
@@ -242,6 +270,9 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     connect(addressBookPage, SIGNAL(verifyMessage(QString)), this, SLOT(gotoVerifyMessageTab(QString)));
     // Clicking on "Sign Message" in the receive coins page sends you to the sign message tab
     connect(receiveCoinsPage, SIGNAL(signMessage(QString)), this, SLOT(gotoSignMessageTab(QString)));
+
+    // Clicking on stake for charity button in the address book sends you to the S4C page
+    connect(addressBookPage, SIGNAL(stakeForCharitySignal(QString)), this, SLOT(charityClicked(QString)));
 
     gotoOverviewPage();
 }
@@ -277,10 +308,22 @@ void BitcoinGUI::createActions()
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
+    charityAction = new QAction(QIcon(":/icons/charity_on"), tr("&"), this);
+    charityAction->setToolTip(tr("Stake your SperoCoin for a charity of your choice"));
+    charityAction->setCheckable(true);
+    charityAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
+    tabGroup->addAction(charityAction);
+
     statisticsAction = new QAction(QIcon(":/icons/statistics"), tr("&  "), this);
     statisticsAction->setToolTip(tr("View statistics"));
     statisticsAction->setCheckable(true);
     tabGroup->addAction(statisticsAction);
+
+/*    speroexchangeAction = new QAction(QIcon(":/icons/speroexchange"), tr("&Exchange"), this);
+    speroexchangeAction->setToolTip(tr("Spero Exchange"));
+    speroexchangeAction->setCheckable(true);
+    tabGroup->addAction(speroexchangeAction);
+*/
 //Block Explorer Desativado Por Francis Santana
 //    blockAction = new QAction(QIcon(":/icons/block"), tr("& "), this);
 //    blockAction->setToolTip(tr("Explore the BlockChain"));
@@ -288,6 +331,7 @@ void BitcoinGUI::createActions()
 //    blockAction->setCheckable(true);
 //    tabGroup->addAction(blockAction);
 //Block Explorer Desativado Por Francis Santana
+
     historyAction = new QAction(QIcon(":/icons/history"), tr("& "), this);
     historyAction->setToolTip(tr("Browse transaction history"));
     historyAction->setCheckable(true);
@@ -300,7 +344,6 @@ void BitcoinGUI::createActions()
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
-
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -311,13 +354,20 @@ void BitcoinGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
+    connect(charityAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(charityAction, SIGNAL(triggered()), this, SLOT(gotoCharityPage()));
 
     connect(statisticsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(statisticsAction, SIGNAL(triggered()), this, SLOT(gotoStatisticsPage()));
+
+/*    connect(speroexchangeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(speroexchangeAction, SIGNAL(triggered()), this, SLOT(gotoSperoExchange()));
+*/
 //Block Explorer Desativado Por Francis Santana
 //    connect(blockAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
 //    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
 //Block Explorer Desativado Por Francis Santana
+
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
@@ -420,10 +470,12 @@ void BitcoinGUI::createToolBars()
     toolbar->setIconSize(QSize(78, 78));
     toolbar->addAction(overviewAction);
     toolbar->addAction(sendCoinsAction);
+    toolbar->addAction(charityAction);
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
     toolbar->addAction(statisticsAction);
+    //toolbar->addAction(speroexchangeAction);
 //Block Explorer Desativado Por Francis Santana
 //    toolbar->addAction(blockAction);
 //Block Explorer Desativado Por Francis Santana
@@ -490,8 +542,11 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
         receiveCoinsPage->setModel(walletModel->getAddressTableModel());
         sendCoinsPage->setModel(walletModel);
         statisticsPage->setModel(clientModel);
+        //speroExchange->setModel(clientModel);
         blockBrowser->setModel(clientModel);
         signVerifyMessageDialog->setModel(walletModel);
+        stakeForCharityDialog->setModel(walletModel);
+        charityPage->setModel(walletModel);
 
         setEncryptionStatus(walletModel->getEncryptionStatus());
         connect(walletModel, SIGNAL(encryptionStatusChanged(int)), this, SLOT(setEncryptionStatus(int)));
@@ -578,7 +633,6 @@ void BitcoinGUI::aboutClicked()
  //   dlg.setModel(walletModel);
   //  dlg.show();
 //}
-
 
 void BitcoinGUI::setNumConnections(int count)
 {
@@ -818,6 +872,16 @@ void BitcoinGUI::gotoStatisticsPage()
    exportAction->setEnabled(false);
    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }
+
+/*void BitcoinGUI::gotoSperoExchange()
+{
+   speroexchangeAction->setChecked(true);
+   centralWidget->setCurrentWidget(speroExchange);
+
+   exportAction->setEnabled(false);
+   disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+}
+*/
 //Block Explorer Desativado Por Francis Santana
 //void BitcoinGUI::gotoBlockBrowser()
 //{
@@ -828,6 +892,7 @@ void BitcoinGUI::gotoStatisticsPage()
 //    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 //}
 //Block Explorer Desativado Por Francis Santana
+
 void BitcoinGUI::gotoHistoryPage()
 {
     historyAction->setChecked(true);
@@ -865,6 +930,17 @@ void BitcoinGUI::gotoSendCoinsPage()
 
     exportAction->setEnabled(false);
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+}
+
+void BitcoinGUI::gotoCharityPage()
+{
+    charityAction->setChecked(true);
+    centralWidget->setCurrentWidget(stakeForCharityDialog);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    updateButtonStakingIcon();
+    stakeForCharityDialog->updateMessageColor();
 }
 
 void BitcoinGUI::gotoSignMessageTab(QString addr)
@@ -1010,6 +1086,8 @@ void BitcoinGUI::unlockWallet()
         dlg.setModel(walletModel);
         dlg.exec();
     }
+    stakeForCharityDialog->updateMessageColor();
+    updateButtonStakingIcon();
 }
 
 void BitcoinGUI::lockWallet()
@@ -1018,6 +1096,8 @@ void BitcoinGUI::lockWallet()
         return;
 
     walletModel->setWalletLocked(true);
+    stakeForCharityDialog->updateMessageColor();
+    updateButtonStakingIcon();
 }
 
 void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
@@ -1058,6 +1138,7 @@ void BitcoinGUI::clickButtonStakingIcon()
     {
         uint64_t nNetworkWeight = GetPoSKernelPS();
         unsigned nEstimateTime = nTargetSpacing * nNetworkWeight / nWeight;
+
         QString text;
         if (nEstimateTime < 60)
         {
@@ -1140,7 +1221,7 @@ void BitcoinGUI::updateButtonStakingIcon()
             //Barra de Status como botões
             buttonStakingIcon->setToolTip(tr("Not staking because wallet is offline"));
             //Barra de Status como botões
-    	else if (!GetBoolArg("-staking", true))
+        else if (!GetBoolArg("-staking", true))
             //Barra de Status como botões
             buttonStakingIcon->setToolTip(tr("Not minting because staking is disabled."));
             //Barra de Status como botões
@@ -1157,4 +1238,16 @@ void BitcoinGUI::updateButtonStakingIcon()
             buttonStakingIcon->setToolTip(tr("Not Staking"));
             //Barra de Status como botões
     }
+}
+
+void BitcoinGUI::charityClicked(QString addr)
+{
+    charityAction->setChecked(true);
+    centralWidget->setCurrentWidget(stakeForCharityDialog);
+
+    if(!addr.isEmpty())
+        stakeForCharityDialog->setAddress(addr);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
 }

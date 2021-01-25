@@ -2,6 +2,8 @@
 #define RPCCONSOLE_H
 
 #include <QDialog>
+#include <QCompleter>
+#include <QAbstractItemView>
 
 namespace Ui {
     class RPCConsole;
@@ -35,7 +37,7 @@ private slots:
     void on_tabWidget_currentChanged(int index);
     /** open the debug.log from the current datadir */
     void on_openDebugLogfileButton_clicked();
-    /** open the idealcash.conf from the current datadir */
+    /** open the SperoCoin.conf from the current datadir */
     void on_openConfigurationfileButton_clicked();
     /** display messagebox with program parameters (same as bitcoin-qt --help) */
     void on_showCLOptionsButton_clicked();
@@ -63,6 +65,7 @@ private:
     ClientModel *clientModel;
     QStringList history;
     int historyPtr;
+    QCompleter *autoCompleter;
 
     void startExecutor();
 };

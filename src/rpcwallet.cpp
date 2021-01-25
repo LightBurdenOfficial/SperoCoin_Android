@@ -224,7 +224,105 @@ Value getaccountaddress(const Array& params, bool fHelp)
     return ret;
 }
 
+Value stakeforcharity(const Array &params, bool fHelp)
+{
+    if (fHelp || params.size() < 2 || params.size() > 5)
+        throw runtime_error(
+            "stakeforcharity <SperoCoinaddress> <percent> [Change Address] [min amount] [max amount]\n"
+            "Gives a percentage of a found stake to a different address, after stake matures\n"
+            "Percent is a whole number 1 to 100.\n"
+            "Change Address, Min and Max Amount are optional\n"
+            "Set percentage to zero to turn off"
+            + HelpRequiringPassphrase());
 
+    CBitcoinAddress address(params[0].get_str());
+    if (!address.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid SperoCoin address");
+
+    if (params[1].get_int() < 0)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid percentage");
+
+    if (pwalletMain->IsLocked())
+        throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with wallet password first.");
+
+    unsigned int nPer = (unsigned int) params[1].get_int();
+
+    int64_t nMinAmount = MIN_TX_FEE;
+    int64_t nMaxAmount = MAX_MONEY;
+
+    // Optional Change Address
+    CBitcoinAddress changeAddress;
+    if (params.size() > 2) {
+        changeAddress = params[2].get_str();
+        if (!changeAddress.IsValid())
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid SperoCoin change address");
+    }
+
+    // Optional Min Amount
+    if (params.size() > 3)
+    {
+        int64_t nAmount = AmountFromValue(params[3]);
+        if (nAmount < MIN_TX_FEE)
+            throw JSONRPCError(-101, "Send amount too small");
+        else
+             nMinAmount = nAmount;
+    }
+
+    // Optional Max Amount
+    if (params.size() > 4)
+    {
+        int64_t nAmount = AmountFromValue(params[4]);
+
+        if (nAmount < MIN_TX_FEE)
+            throw JSONRPCError(-101, "Send amount too small");
+        else
+             nMaxAmount = nAmount;
+    }
+
+    CWalletDB walletdb(pwalletMain->strWalletFile);
+
+    LOCK(pwalletMain->cs_wallet);
+    {
+        bool fFileBacked = pwalletMain->fFileBacked;
+        //Turn off if we set to zero.
+        //Future: After we allow multiple addresses, only turn of this address
+        if(nPer == 0)
+        {
+            pwalletMain->fStakeForCharity = false;
+            pwalletMain->nStakeForCharityPercent = 0;
+            pwalletMain->nStakeForCharityMin = nMinAmount;
+            pwalletMain->nStakeForCharityMax = nMaxAmount;
+
+        if(fFileBacked)
+            walletdb.EraseStakeForCharity(pwalletMain->strStakeForCharityAddress.ToString());
+
+        pwalletMain->strStakeForCharityAddress = "";
+        pwalletMain->strStakeForCharityChangeAddress = "";
+
+            return Value::null;
+        }
+        //For now max percentage is 50. SPERO 100%
+        if (nPer > 100 )
+            nPer = 100;
+
+        if(fFileBacked)
+            walletdb.EraseStakeForCharity(pwalletMain->strStakeForCharityAddress.ToString());
+
+        pwalletMain->strStakeForCharityAddress = address;
+        pwalletMain->nStakeForCharityPercent = nPer;
+        pwalletMain->strStakeForCharityChangeAddress = changeAddress;
+        pwalletMain->fStakeForCharity = true;
+        pwalletMain->nStakeForCharityMin = nMinAmount;
+        pwalletMain->nStakeForCharityMax = nMaxAmount;
+        fGlobalStakeForCharity = true;
+        if(fFileBacked)
+            walletdb.WriteStakeForCharity(address.ToString(), nPer, changeAddress.ToString(), nMinAmount, nMaxAmount);
+
+        if(fFileBacked)
+            walletdb.WriteStakeForCharity(address.ToString(), nPer, changeAddress.ToString(),nMinAmount,nMaxAmount);
+    }
+    return Value::null;
+}
 
 Value setaccount(const Array& params, bool fHelp)
 {
@@ -555,7 +653,7 @@ int64_t GetAccountBalance(const string& strAccount, int nMinDepth)
 
 Value getbalance(const Array& params, bool fHelp)
 {
-    if (fHelp || params.size() > 2)
+    if (fHelp || params.size() > 3)
         throw runtime_error(
             "getbalance [account] [minconf=1]\n"
             "If [account] is not specified, returns the server's total available balance.\n"
@@ -850,7 +948,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     if ((int)keys.size() < nRequired)
         throw runtime_error(
             strprintf("not enough keys supplied "
-                      "(got %" PRIszu " keys, but need at least %d to redeem)", keys.size(), nRequired));
+                      "(got %"PRIszu" keys, but need at least %d to redeem)", keys.size(), nRequired));
     std::vector<CKey> pubkeys;
     pubkeys.resize(keys.size());
     for (unsigned int i = 0; i < keys.size(); i++)
@@ -937,9 +1035,7 @@ struct tallyitem
 {
     int64_t nAmount;
     int nConf;
-    //listreceivedbyaddress exibindo as TxIds
     vector<uint256> txids;
-    //listreceivedbyaddress exibindo as TxIds
     tallyitem()
     {
         nAmount = 0;
@@ -981,9 +1077,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
             tallyitem& item = mapTally[address];
             item.nAmount += txout.nValue;
             item.nConf = min(item.nConf, nDepth);
-            //listreceivedbyaddress exibindo as TxIds
             item.txids.push_back(wtx.GetHash());
-            //listreceivedbyaddress exibindo as TxIds
         }
     }
 
@@ -1019,14 +1113,12 @@ Value ListReceived(const Array& params, bool fByAccounts)
             obj.push_back(Pair("account",       strAccount));
             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
-            //listreceivedbyaddress exibindo as TxIds
             Array transactions;
             BOOST_FOREACH(const uint256& item, (*it).second.txids)
             {
                 transactions.push_back(item.GetHex());
             }
             obj.push_back(Pair("txids", transactions));
-            //listreceivedbyaddress exibindo as TxIds
             ret.push_back(obj);
         }
     }
@@ -1944,6 +2036,28 @@ int GetsStakeSubTotal(vStakePeriodRange_T& aRange)
     return nElement;
 }
 
+/*
+***  Start Fix MingW - Stake Report
+*/
+#ifdef WIN32
+#ifdef QT_GUI
+    /* Sem definições para o script de adaptação do MinGW quando utilizado o sistema QT - Stake Report */
+#else
+    struct tm *
+localtime_r (const time_t *timer, struct tm *result)
+{
+   struct tm *local_result;
+   local_result = localtime (timer);
+   if (local_result == NULL || result == NULL)
+     return NULL;
+   memcpy (result, local_result, sizeof (result));
+   return result;
+}
+#endif
+#endif
+/*
+***  End Fix MingW - Stake Report
+*/
 
 // prepare range for stake report
 vStakePeriodRange_T PrepareRangeForStakeReport()
@@ -1959,7 +2073,11 @@ vStakePeriodRange_T PrepareRangeForStakeReport()
     int64_t nToday = GetTime();
     time_t CurTime = nToday;
 
+#if defined _WIN32 || defined __CYGWIN__ || defined _WIN32_WCE
+    localtime_s(&Loc_MidNight, &CurTime);
+#else
     localtime_r(&CurTime, &Loc_MidNight);
+#endif
     Loc_MidNight.tm_hour = 0;
     Loc_MidNight.tm_min = 0;
     Loc_MidNight.tm_sec = 0;  // set midnight

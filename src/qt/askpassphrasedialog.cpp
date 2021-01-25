@@ -124,15 +124,15 @@ void AskPassphraseDialog::accept()
                 if(model->setWalletEncrypted(true, newpass1))
                 {
                     QMessageBox::warning(this, tr("Wallet encrypted"),
-                                         "<qt>" +
+                                         "<qt>" + 
                                          tr("SperoCoin will close now to finish the encryption process. "
                                          "Remember that encrypting your wallet cannot fully protect "
-                                         "your coins from being stolen by malware infecting your computer.") +
-                                         "<br><br><b>" +
+                                         "your coins from being stolen by malware infecting your computer.") + 
+                                         "<br><br><b>" + 
                                          tr("IMPORTANT: Any previous backups you have made of your wallet file "
                                          "should be replaced with the newly generated, encrypted wallet file. "
                                          "For security reasons, previous backups of the unencrypted wallet file "
-                                         "will become useless as soon as you start using the new, encrypted wallet.") +
+                                         "will become useless as soon as you start using the new, encrypted wallet.") + 
                                          "</b></qt>");
                     QApplication::quit();
                 }

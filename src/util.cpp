@@ -117,6 +117,7 @@ public:
     }
     ~CInit()
     {
+
         // Shutdown OpenSSL library multithreading support
         CRYPTO_set_locking_callback(NULL);
         for (int i = 0; i < CRYPTO_num_locks(); i++)
@@ -373,7 +374,7 @@ string FormatMoney(int64_t n, bool fPlus)
     int64_t n_abs = (n > 0 ? n : -n);
     int64_t quotient = n_abs/COIN;
     int64_t remainder = n_abs%COIN;
-    string str = strprintf("%" PRId64".%08" PRId64, quotient, remainder);
+    string str = strprintf("%"PRId64".%08"PRId64, quotient, remainder);
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;
@@ -991,14 +992,14 @@ void LogStackTrace() {
     printf("\n\n******* exception encountered *******\n");
     if (fileout)
     {
-        //Início das Alterações para Android e versão Qt5- Francis Santana
-        #if !defined(WIN32) && !defined(ANDROID)
-                void* pszBuffer[32];
-                size_t size;
-                size = backtrace(pszBuffer, 32);
-                backtrace_symbols_fd(pszBuffer, size, fileno(fileout));
-        #endif
-        //Fim das Alterações para Android e versão Qt5- Francis Santana
+//Início das Alterações para Android e versão Qt5- Francis Santana
+#if !defined(WIN32) && !defined(ANDROID)
+        void* pszBuffer[32];
+        size_t size;
+        size = backtrace(pszBuffer, 32);
+        backtrace_symbols_fd(pszBuffer, size, fileno(fileout));
+#endif
+//Fim das Alterações para Android e versão Qt5- Francis Santana
     }
 }
 
@@ -1081,47 +1082,44 @@ boost::filesystem::path GetConfigFile()
     return pathConfigFile;
 }
 
-string randomStrGen(int length){
+string randomStrGen(int length) {
     static string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     string result;
     result.resize(length);
-    for (int i = 0; i < length; i++)
+    for (int32_t i = 0; i < length; i++)
         result[i] = charset[rand() % charset.length()];
 
     return result;
 }
 
-
 void createConf()
 {
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
 
     ofstream pConf;
-//Adição da Intro
 #if BOOST_FILESYSTEM_VERSION >= 3
     pConf.open(GetConfigFile().generic_string().c_str());
 #else
     pConf.open(GetConfigFile().string().c_str());
 #endif
-//Adição da Intro
     pConf << "rpcuser=user\nrpcpassword="
     + randomStrGen(15)
-    + "\nrpcport=55691"
-    + "\nport=55690"
+    + "\nrpcport=55681"
+    + "\nport=55680"
     + "\n#(0=off, 1=on) daemon - run in the background as a daemon and accept commands"
     + "\ndaemon=1"
     + "\nlisten=1"
     + "\ntxindex=1"
     + "\n#(0=off, 1=on) server - accept command line and JSON-RPC commands"
     + "\nserver=1"
-    + "\nrpcallowip=*"
+    + "\nrpcallowip=127.0.0.1"
     + "\ntestnet=0"
-    + "\n# MainNet"
     + "\naddnode=seed1.sperocoin.org:55680"
-    + "\naddnode=seed2.sperocoin.org:55680";
+    + "\naddnode=seed2.sperocoin.org:55680"
+    + "\naddnode=seed3.sperocoin.org:55680"
+    + "\naddnode=seed4.sperocoin.org:55680";
    pConf.close();
 }
-
 
 void ReadConfigFile(map<string, string>& mapSettingsRet,
                     map<string, vector<string> >& mapMultiSettingsRet)
@@ -1212,8 +1210,8 @@ void ShrinkDebugFile()
             fclose(file);
         }
     }
-        else if(file != NULL)
-         fclose(file);
+    else if(file != NULL)
+fclose(file);
 }
 
 //
@@ -1262,7 +1260,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
 
     // Add data
     vTimeOffsets.input(nOffsetSample);
-    printf("Added time data, samples %d, offset %+" PRId64" (%+" PRId64" minutes)\n", vTimeOffsets.size(), nOffsetSample, nOffsetSample/60);
+    printf("Added time data, samples %d, offset %+"PRId64" (%+"PRId64" minutes)\n", vTimeOffsets.size(), nOffsetSample, nOffsetSample/60);
     if (vTimeOffsets.size() >= 5 && vTimeOffsets.size() % 2 == 1)
     {
         int64_t nMedian = vTimeOffsets.median();
@@ -1297,10 +1295,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
         }
         if (fDebug) {
             BOOST_FOREACH(int64_t n, vSorted)
-                printf("%+" PRId64"  ", n);
+                printf("%+"PRId64"  ", n);
             printf("|  ");
         }
-        printf("nTimeOffset = %+" PRId64"  (%+" PRId64" minutes)\n", nTimeOffset, nTimeOffset/60);
+        printf("nTimeOffset = %+"PRId64"  (%+"PRId64" minutes)\n", nTimeOffset, nTimeOffset/60);
     }
 }
 

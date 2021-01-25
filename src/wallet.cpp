@@ -898,7 +898,7 @@ void CWallet::ReacceptWalletTransactions()
                 // Update fSpent if a tx got spent somewhere else by a copy of wallet.dat
                 if (txindex.vSpent.size() != wtx.vout.size())
                 {
-                    printf("ERROR: ReacceptWalletTransactions() : txindex.vSpent.size() %" PRIszu " != wtx.vout.size() %" PRIszu "\n", txindex.vSpent.size(), wtx.vout.size());
+                    printf("ERROR: ReacceptWalletTransactions() : txindex.vSpent.size() %"PRIszu" != wtx.vout.size() %"PRIszu"\n", txindex.vSpent.size(), wtx.vout.size());
                     continue;
                 }
                 for (unsigned int i = 0; i < txindex.vSpent.size(); i++)
@@ -1189,6 +1189,54 @@ int64_t CWallet::GetNewMint() const
             nTotal += CWallet::GetCredit(*pcoin);
     }
     return nTotal;
+}
+
+bool fGlobalStakeForCharity = false;
+int nPrevS4CHeight = 0;
+
+bool CWallet::StakeForCharity()
+{
+
+    if ( IsInitialBlockDownload() || IsLocked() ){ return false; }
+
+    CWalletTx wtx;
+    int64_t nNet = 0;
+
+    for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
+    {
+        const CWalletTx* pcoin = &(*it).second;
+
+        //if the coin is a stake coin, and the coin is mature, and the coin stake is deep enough in the chain to be considered as
+        //mature stake, then we can calculate and send the S4E
+        if (pcoin->IsCoinStake() && pcoin->GetBlocksToMaturity() == 0  && pcoin->GetDepthInMainChain() == nCoinbaseMaturity+10)
+        {
+            // Calculate Amount for Charity
+            nNet = ( ( pcoin->GetCredit() - pcoin->GetDebit() ) * nStakeForCharityPercent )/100;
+
+            // Do not send if amount is too low
+            if (nNet < nStakeForCharityMin ) {
+                return false;
+            }
+            // Truncate to max if amount is too great
+            if (nNet > nStakeForCharityMax ) {
+                nNet = nStakeForCharityMax;
+            }
+
+            if (nBestHeight <= nPrevS4CHeight ) {
+                printf("StakeForCharity: Warning! nBestHeight %d less or equal to nPreveS4CHeight %d.\n",
+                       nBestHeight,
+                       nPrevS4CHeight);
+                return false;
+            }
+            else
+            {
+                SendMoneyToDestination(strStakeForCharityAddress.Get(), nNet, wtx, false); // SPERO removed 2 args  , "", true);
+                nPrevS4CHeight = nBestHeight;
+            }
+        }
+    }
+
+    return true;
 }
 
 bool CWallet::SelectCoinsMinConf(int64_t nTargetValue, unsigned int nSpendTime, int nConfMine, int nConfTheirs, vector<COutput> vCoins, set<pair<const CWalletTx*,unsigned int> >& setCoinsRet, int64_t& nValueRet) const
@@ -1581,6 +1629,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         return false;
 
     int64_t nCredit = 0;
+    int64_t nDevCoin = 0;
     CScript scriptPubKeyKernel;
     CTxDB txdb("r");
     BOOST_FOREACH(PAIRTYPE(const CWalletTx*, unsigned int) pcoin, setCoins)
@@ -1729,18 +1778,51 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
         if (nReward <= 0)
             return false;
 
+    if (pindexBest->nHeight >= HALVING_POS_03){
+      if(pindexBest->nHeight >= HALVING_POS_03 && pindexBest->nHeight < HALVING_POS_04){
+        nDevCoin = 0.25 * COIN; // Developer reward 0.25
+      }
+      if(pindexBest->nHeight >= HALVING_POS_04){
+        nDevCoin = 0.10 * COIN; // Developer reward 0.10
+      }
+        nReward -= nDevCoin;
+        nCredit += (nReward + nDevCoin);
+    } else {
         nCredit += nReward;
     }
+    }
 
+if (pindexBest->nHeight >= HALVING_POS_03){
+    // Set output amount
+    if (txNew.vout.size() == 3)
+    {
+        printf("\x1B[36mTransaction vout.size() == 3\033[0m\t\t\n");
+        txNew.vout[1].nValue = (nCredit / 2 / CENT) * CENT; // Actual POS Reward
+        txNew.vout[2].nValue = nCredit - txNew.vout[1].nValue - nDevCoin;// Wallet to wallet transaction
+        CBitcoinAddress address(!fTestNet ? FOUNDATION_POS : FOUNDATION_TEST_POS);
+        txNew.vout.resize(4);
+        txNew.vout[3].scriptPubKey.SetDestination(address.Get());
+        txNew.vout[3].nValue = nDevCoin;
+    } else {
+        printf("\x1B[36mTransaction vout.size() != 3\033[0m\t\t\n");
+        txNew.vout[1].nValue = nCredit - nDevCoin;// - nDevCoin; // Actual POS Reward
+        CBitcoinAddress address(!fTestNet ? FOUNDATION_POS : FOUNDATION_TEST_POS);
+        txNew.vout.resize(3);
+        txNew.vout[2].scriptPubKey.SetDestination(address.Get());
+        txNew.vout[2].nValue = nDevCoin;
+   }
+
+} else {
     // Set output amount
     if (txNew.vout.size() == 3)
     {
         txNew.vout[1].nValue = (nCredit / 2 / CENT) * CENT;
         txNew.vout[2].nValue = nCredit - txNew.vout[1].nValue;
     }
-    else
+    else{
         txNew.vout[1].nValue = nCredit;
-
+    }
+}
     // Sign
     int nIn = 0;
     BOOST_FOREACH(const CWalletTx* pcoin, vwtxPrev)
@@ -1914,6 +1996,7 @@ DBErrors CWallet::ZapWalletTx()
 }
 
 
+
 bool CWallet::SetAddressBookName(const CTxDestination& address, const string& strName)
 {
     std::map<CTxDestination, std::string>::iterator mi = mapAddressBook.find(address);
@@ -1941,12 +2024,12 @@ void CWallet::PrintWallet(const CBlock& block)
         if (block.IsProofOfWork() && mapWallet.count(block.vtx[0].GetHash()))
         {
             CWalletTx& wtx = mapWallet[block.vtx[0].GetHash()];
-            printf("    mine:  %d  %d  %" PRId64"", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit());
+            printf("    mine:  %d  %d  %"PRId64"", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit());
         }
         if (block.IsProofOfStake() && mapWallet.count(block.vtx[1].GetHash()))
         {
             CWalletTx& wtx = mapWallet[block.vtx[1].GetHash()];
-            printf("    stake: %d  %d  %" PRId64"", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit());
+            printf("    stake: %d  %d  %"PRId64"", wtx.GetDepthInMainChain(), wtx.GetBlocksToMaturity(), wtx.GetCredit());
          }
 
     }
@@ -2009,7 +2092,7 @@ bool CWallet::NewKeyPool()
             walletdb.WritePool(nIndex, CKeyPool(GenerateNewKey()));
             setKeyPool.insert(nIndex);
         }
-        printf("CWallet::NewKeyPool wrote %" PRId64" new keys\n", nKeys);
+        printf("CWallet::NewKeyPool wrote %"PRId64" new keys\n", nKeys);
     }
     return true;
 }
@@ -2039,7 +2122,7 @@ bool CWallet::TopUpKeyPool(unsigned int nSize)
             if (!walletdb.WritePool(nEnd, CKeyPool(GenerateNewKey())))
                 throw runtime_error("TopUpKeyPool() : writing generated key failed");
             setKeyPool.insert(nEnd);
-            printf("keypool added key %" PRId64", size=%" PRIszu "\n", nEnd, setKeyPool.size());
+            printf("keypool added key %"PRId64", size=%"PRIszu"\n", nEnd, setKeyPool.size());
         }
     }
     return true;
@@ -2069,7 +2152,7 @@ void CWallet::ReserveKeyFromKeyPool(int64_t& nIndex, CKeyPool& keypool)
             throw runtime_error("ReserveKeyFromKeyPool() : unknown key in key pool");
         assert(keypool.vchPubKey.IsValid());
         if (fDebug && GetBoolArg("-printkeypool"))
-            printf("keypool reserve %" PRId64"\n", nIndex);
+            printf("keypool reserve %"PRId64"\n", nIndex);
     }
 }
 
@@ -2097,7 +2180,7 @@ void CWallet::KeepKey(int64_t nIndex)
         walletdb.ErasePool(nIndex);
     }
     if(fDebug)
-        printf("keypool keep %" PRId64"\n", nIndex);
+        printf("keypool keep %"PRId64"\n", nIndex);
 }
 
 void CWallet::ReturnKey(int64_t nIndex)
@@ -2108,7 +2191,7 @@ void CWallet::ReturnKey(int64_t nIndex)
         setKeyPool.insert(nIndex);
     }
     if(fDebug)
-        printf("keypool return %" PRId64"\n", nIndex);
+        printf("keypool return %"PRId64"\n", nIndex);
 }
 
 bool CWallet::GetKeyFromPool(CPubKey& result, bool fAllowReuse)
@@ -2195,29 +2278,38 @@ set< set<CTxDestination> > CWallet::GetAddressGroupings()
     {
         CWalletTx *pcoin = &walletEntry.second;
 
-        if (pcoin->vin.size() > 0 && IsMine(pcoin->vin[0]))
+        if (pcoin->vin.size() > 0)
         {
+            bool any_mine = false;
             // group all input addresses with each other
             BOOST_FOREACH(CTxIn txin, pcoin->vin)
             {
                 CTxDestination address;
+                if(!IsMine(txin)) // If this input isn't mine, ignore it
+                    continue;
                 if(!ExtractDestination(mapWallet[txin.prevout.hash].vout[txin.prevout.n].scriptPubKey, address))
                     continue;
                 grouping.insert(address);
+                any_mine = true;
             }
 
             // group change with input addresses
-            BOOST_FOREACH(CTxOut txout, pcoin->vout)
+            if (any_mine)
+            {
+                BOOST_FOREACH(CTxOut txout, pcoin->vout)
                 if (IsChange(txout))
                 {
-                    CWalletTx tx = mapWallet[pcoin->vin[0].prevout.hash];
                     CTxDestination txoutAddr;
                     if(!ExtractDestination(txout.scriptPubKey, txoutAddr))
                         continue;
-                    grouping.insert(txoutAddr);
+                        grouping.insert(txoutAddr);
                 }
-            groupings.insert(grouping);
-            grouping.clear();
+            }
+            if (!grouping.empty())
+            {
+                groupings.insert(grouping);
+                grouping.clear();
+            }
         }
 
         // group lone addrs by themselves
@@ -2321,7 +2413,7 @@ void CWallet::FixSpentCoins(int& nMismatchFound, int64_t& nBalanceInQuestion, in
                     pcoin->WriteToDisk();
                 }
             }
-        if (fUpdated)
+            if (fUpdated)
                 NotifyTransactionChanged(this, hash, CT_UPDATED);
         }
         if((pcoin->IsCoinBase() || pcoin->IsCoinStake()) && pcoin->GetDepthInMainChain() <= 0)

@@ -254,7 +254,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
 
             //// debug print
             //printf("LoadWallet  %s\n", wtx.GetHash().ToString().c_str());
-            //printf(" %12" PRId64"  %s  %s  %s\n",
+            //printf(" %12"PRId64"  %s  %s  %s\n",
             //    wtx.vout[0].nValue,
             //    DateTimeStrFormat("%x %H:%M:%S", wtx.GetBlockTime()).c_str(),
             //    wtx.hashBlock.ToString().substr(0,20).c_str(),
@@ -416,6 +416,33 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
         else if (strType == "orderposnext")
         {
             ssValue >> pwallet->nOrderPosNext;
+        }
+        else if (strType == "s4c") // falsely names as autosavings, but for compat with older wallets keep using
+        {
+            string strS4CAccount;
+            ssKey >> strS4CAccount;
+            if (CBitcoinAddress(strS4CAccount).IsValid())
+            {
+                pwallet->fStakeForCharity = true;
+                pwallet->strStakeForCharityAddress = CBitcoinAddress(strS4CAccount).Get();
+                fGlobalStakeForCharity = true;
+                string strS4CChhangeAccount;
+                ssValue >> strS4CChhangeAccount;
+                if (CBitcoinAddress(strS4CChhangeAccount).IsValid())
+                     pwallet->strStakeForCharityChangeAddress = CBitcoinAddress(strS4CChhangeAccount).Get();
+                ssValue >> pwallet->nStakeForCharityPercent;
+             }
+
+        }
+        else if (strType == "s4c2")
+        {
+             string strS4CAccount;
+             ssKey >> strS4CAccount;
+             if (CBitcoinAddress(strS4CAccount).IsValid())
+             {
+                 ssValue >> pwallet->nStakeForCharityMin;
+                 ssValue >> pwallet->nStakeForCharityMax;
+             }
         }
     } catch (...)
     {
@@ -664,7 +691,7 @@ void ThreadFlushWalletDB(void* parg)
                         bitdb.CheckpointLSN(strFile);
 
                         bitdb.mapFileUseCount.erase(mi++);
-                        printf("Flushed wallet.dat %" PRId64"ms\n", GetTimeMillis() - nStart);
+                        printf("Flushed wallet.dat %"PRId64"ms\n", GetTimeMillis() - nStart);
                     }
                 }
             }
@@ -725,7 +752,7 @@ bool CWalletDB::Recover(CDBEnv& dbenv, std::string filename, bool fOnlyKeys)
     // Set -rescan so any missing transactions will be
     // found.
     int64_t now = GetTime();
-    std::string newFilename = strprintf("wallet.%" PRId64".bak", now);
+    std::string newFilename = strprintf("wallet.%"PRId64".bak", now);
 
     int result = dbenv.dbenv.dbrename(NULL, filename.c_str(), NULL,
                                       newFilename.c_str(), DB_AUTO_COMMIT);
@@ -744,7 +771,7 @@ bool CWalletDB::Recover(CDBEnv& dbenv, std::string filename, bool fOnlyKeys)
         printf("Salvage(aggressive) found no records in %s.\n", newFilename.c_str());
         return false;
     }
-    printf("Salvage(aggressive) found %" PRIszu " records\n", salvagedData.size());
+    printf("Salvage(aggressive) found %"PRIszu" records\n", salvagedData.size());
 
     bool fSuccess = allOK;
     Db* pdbCopy = new Db(&dbenv.dbenv, 0);

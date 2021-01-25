@@ -123,6 +123,12 @@ public:
      * @throws an exception (json_spirit::Value) when an error happens.
      */
     json_spirit::Value execute(const std::string &method, const json_spirit::Array &params) const;
+
+    /**
+    * Returns a list of registered commands
+    * @returns List of registered commands.
+    */
+    std::vector<std::string> listCommands() const;
 };
 
 extern const CRPCTable tableRPC;
@@ -238,19 +244,5 @@ extern json_spirit::Value getstakereport(const json_spirit::Array& params, bool 
 
 extern json_spirit::Value dumpblock(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dumpblockbynumber(const json_spirit::Array& params, bool fHelp);
-
-extern json_spirit::Value smsgenable(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgdisable(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsglocalkeys(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgoptions(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgscanchain(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgscanbuckets(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgaddkey(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsggetpubkey(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgsend(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgsendanon(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsginbox(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgoutbox(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value smsgbuckets(const json_spirit::Array& params, bool fHelp);
 
 #endif

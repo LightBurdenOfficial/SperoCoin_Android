@@ -28,7 +28,6 @@ QRCodeDialog::QRCodeDialog(const QString &addr, const QString &label, bool enabl
             this->setFont(font);
             this->setFixedWidth((int)rec.width());
             this->setFixedHeight((int)(rec.height()*0.8));
-
     setWindowTitle(QString("%1").arg(address));
 
     ui->chkReqPayment->setVisible(enableReq);

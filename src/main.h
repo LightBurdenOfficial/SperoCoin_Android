@@ -26,11 +26,21 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
-//Melhorias de Desempenho - Aumento de Velocidade na Sincronização
-static const int SKIP_VALIDATION_HEIGHT = 1000; //Usado em Testnet
+/* Melhorias de Desempenho - Aumento de Velocidade na Sincronização */
+static const int SKIP_VALIDATION_HEIGHT = 165000;
 
+/* Último bloco PoW - Halving 01 */
 static const int LAST_POW_BLOCK = 33331;
-static const int POS_POW_HIBRID = 263250;
+/* Reinício da Fase de Mineração Híbrida */
+static const int POS_POW_HYBRID = 263250;
+/* Fases de Mineração PoW(Halvings) */
+static const int HALVING_POW_03 = 1100000;
+static const int HALVING_POW_04 = 1625600;
+static const int HALVING_POW_05 = 2151200;
+/* Fases de Mineração Pos(Halvings) */
+static const int HALVING_POS_03 = 1100000;
+static const int HALVING_POS_04 = 2151200;
+/* Configurações de Blocos */
 static const unsigned int MAX_BLOCK_SIZE = 20000000; //20MB
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
 static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
@@ -39,15 +49,30 @@ static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 750;
 /** Default for -maxorphantx, maximum number of orphan transactions kept in memory */
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = 100;
 static const unsigned int MAX_INV_SZ = 50000;
+/* Taxa de Rede(transaction fee)*/
 static const int64_t MIN_TX_FEE = 10000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+/* Total Supply */
 static const int64_t MAX_MONEY = 7000000 * COIN;
+/* Recompensas PoS */
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 0.05 * COIN; //Stake 5% por ano
 static const int64_t MAX_MINT_PROOF_OF_STAKE_NEW = 0.25 * COIN; //Stake 25% por ano
+static const int64_t MAX_MINT_PROOF_OF_STAKE_NEW_02 = 0.50 * COIN; //Stake 0.50 moedas por stake
+static const int64_t MAX_MINT_PROOF_OF_STAKE_NEW_03 = 0.25 * COIN; //Stake 0.25 moedas por stake
+/* Output console */
 static const int64_t COIN_YEAR_REWARD = 25 * CENT; // 25% per year (output to console will be updated)
+static const int64_t COIN_POS_NEW_REWARD = 0.50 * COIN; // 0.50 moedas por pagamento (output to console will be updated)
+static const int64_t COIN_POS_NEW_REWARD_02 = 0.25 * COIN; // 0.25 moedas por pagamento (output to console will be updated)
 
+/* Início Adaptação para pagamentos Foundation */
 #define FOUNDATION "ScCJWtVVQxtEkKDqnL43aJpzULvpEE5fBD"
 #define FOUNDATION_TEST "sbEje8AqUUqkUXXNGYJodR2SN3emT6PVzA"
+/* Fim Adaptação para pagamentos Foundation */
+
+/* Início Adaptação para pagamentos Foundation PoS */
+#define FOUNDATION_POS "ScCJWtVVQxtEkKDqnL43aJpzULvpEE5fBD"
+#define FOUNDATION_TEST_POS "saFFVBM6CGw7RTJLHdDJcizQ1V77XbkzTv"
+/* Fim Adaptação para pagamentos Foundation PoS */
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -126,6 +151,8 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake);
 int64_t GetProofOfWorkReward(int64_t nFees);
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees);
+int64_t GetProofOfStakeRewardV1(int64_t nCoinAge, int64_t nFees);
+int64_t GetProofOfStakeRewardV2(int64_t nCoinAge, int64_t nFees);
 unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime);
 unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBlockTime);
 int GetNumBlocksOfPeers();
@@ -652,7 +679,7 @@ public:
     {
         std::string str;
         str += IsCoinBase()? "Coinbase" : (IsCoinStake()? "Coinstake" : "CTransaction");
-        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%" PRIszu ", vout.size=%" PRIszu ", nLockTime=%d)\n",
+        str += strprintf("(hash=%s, nTime=%d, ver=%d, vin.size=%"PRIszu", vout.size=%"PRIszu", nLockTime=%d)\n",
             GetHash().ToString().substr(0,10).c_str(),
             nTime,
             nVersion,
@@ -1072,7 +1099,7 @@ public:
 
     void print() const
     {
-        printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%" PRIszu ", vchBlockSig=%s)\n",
+        printf("CBlock(hash=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%"PRIszu", vchBlockSig=%s)\n",
             GetHash().ToString().c_str(),
             nVersion,
             hashPrevBlock.ToString().c_str(),
@@ -1334,7 +1361,7 @@ public:
 
     std::string ToString() const
     {
-        return strprintf("CBlockIndex(nprev=%p, pnext=%p, nFile=%u, nBlockPos=%-6d nHeight=%d, nMint=%s, nMoneySupply=%s, nFlags=(%s)(%d)(%s), nStakeModifier=%016" PRIx64 ", nStakeModifierChecksum=%08x, hashProofOfStake=%s, prevoutStake=(%s), nStakeTime=%d merkle=%s, hashBlock=%s)",
+        return strprintf("CBlockIndex(nprev=%p, pnext=%p, nFile=%u, nBlockPos=%-6d nHeight=%d, nMint=%s, nMoneySupply=%s, nFlags=(%s)(%d)(%s), nStakeModifier=%016"PRIx64", nStakeModifierChecksum=%08x, hashProofOfStake=%s, prevoutStake=(%s), nStakeTime=%d merkle=%s, hashBlock=%s)",
             pprev, pnext, nFile, nBlockPos, nHeight,
             FormatMoney(nMint).c_str(), FormatMoney(nMoneySupply).c_str(),
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",

@@ -1,13 +1,31 @@
+#############################################################################################################################
 TEMPLATE = app
-TARGET = SperoCoin-qt
-VERSION = ANDROID-2.6.4.9
-INCLUDEPATH += src src/json src/qt
+DEFINES += fName1 fName2
+fName1 = "SperoCoin-Qt"
+macx:TARGET = "SperoCoin-Qt"
+VERSION = 2.6.5.1
+QMAKE_TARGET_BUNDLE_PREFIX = co.SperoCoin
+contains(QT_ARCH, i386) {
+    fName2 = "-x86-v"
+} else {
+    fName2 = "-x64-v"
+}
+INCLUDEPATH += src src/json \
+    src/qt
 QT += core gui network androidextras
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE __STDC_FORMAT_MACROS __STDC_LIMIT_MACROS
 CONFIG += no_include_pwd
-CONFIG += thread
-#CONFIG += static
+CONFIG += thread warn_off
+
+lessThan(QT_MAJOR_VERSION, 5) {
+    CONFIG += static
+}
+QMAKE_CXXFLAGS = -fpermissive
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+    DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+}
 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -19,6 +37,7 @@ CONFIG += thread
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
+#############################################################################################################################
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
@@ -27,7 +46,6 @@ USE_UPNP=1
 USE_IPV6=0
 USE_LEVELDB=1
 USE_QRCODE=1
-#USE_ASM=1
 
 QMAKE_CXXFLAGS=-fstack-protector-strong -DANDROID -fno-builtin-memmove --sysroot=C:/Android/android-ndk-r10d/platforms/android-9/arch-arm -std=c++11
 
@@ -42,6 +60,7 @@ contains(DEBUG, 1) {
     QMAKE_CFLAGS += -g -O0
     QMAKE_CXXCFLAGS += -g -O0
 }
+#############################################################################################################################
 
 android {
         message("Using Android settings")
@@ -152,9 +171,12 @@ QMAKE_CXXFLAGS *= -std=c++11
 contains(USE_QRCODE, 1) {
     message(Building with QRCode support)
     DEFINES += USE_QRCODE
-    LIBS += -lqrencode
+    macx:LIBS += -lqrencode
+    win32:INCLUDEPATH +=$$QRENCODE_INCLUDE_PATH
+    win32:LIBS += $$join(QRENCODE_LIB_PATH,,-L) -lqrencode
+    !win32:!macx:LIBS += -lqrencode
 }
-
+############################################################################################################################
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
@@ -186,6 +208,7 @@ contains(USE_DBUS, 1) {
 contains(USE_IPV6, -) {
     message(Building without IPv6 support)
 } else {
+    message(Building with IPv6 support)
     count(USE_IPV6, 0) {
         USE_IPV6=1
     }
@@ -253,6 +276,7 @@ SOURCES += src/txdb-leveldb.cpp \
 #    DEFINES += HAVE_BUILD_INFO
 #}
 
+USE_O3=0
 contains(USE_O3, 1) {
     message(Building O3 optimization flag)
     QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -377,7 +401,8 @@ HEADERS += src/qt/bitcoingui.h \
     src/threadsafety.h \
     src/txdb-leveldb.h \
     src/qt/stakereportdialog.h \
-    src/permissions.h
+    src/permissions.h \
+    src/qt/charitydialog.h
 
 SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/transactiontablemodel.cpp \
@@ -451,7 +476,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/scrypt.cpp \
     src/pbkdf2.cpp \
     src/qt/stakereportdialog.cpp \
-    src/permissions.cpp
+    src/permissions.cpp \
+    src/qt/charitydialog.cpp
 
 RESOURCES += src/qt/bitcoin.qrc
 
@@ -471,7 +497,8 @@ FORMS += \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
     src/qt/forms/optionsdialog.ui \
-    src/qt/forms/stakereportdialog.ui
+    src/qt/forms/stakereportdialog.ui \
+    src/qt/forms/charitydialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h
@@ -626,4 +653,5 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_EXTRA_LIBS = C:/SperoCoin_Android/../Android/deps/miniupnpc-2.0/miniupnpc-2.0/armeabi-v7a/lib/libminiupnpc.so
+
 }

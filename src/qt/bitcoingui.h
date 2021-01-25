@@ -15,7 +15,9 @@ class SignVerifyMessageDialog;
 class Notificator;
 class RPCConsole;
 class StatisticsPage;
+//class SperoExchange;
 class BlockBrowser;
+class StakeForCharityDialog;
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -62,6 +64,7 @@ private:
     ClientModel *clientModel;
     WalletModel *walletModel;
     StatisticsPage *statisticsPage;
+    //SperoExchange *speroExchange;
     BlockBrowser *blockBrowser;
 
     QStackedWidget *centralWidget;
@@ -72,6 +75,8 @@ private:
     AddressBookPage *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
     SignVerifyMessageDialog *signVerifyMessageDialog;
+    StakeForCharityDialog *stakeForCharityDialog;
+    StakeForCharityDialog *charityPage;
 
     QLabel *labelEncryptionIcon;
     //Barra de Status como botões
@@ -81,6 +86,7 @@ private:
     //Barra de Status como botões
     QLabel *labelConnectionsIcon;
     QLabel *labelBlocksIcon;
+    QLabel *buttonCharityIcon;
     QLabel *progressBarLabel;
     QProgressBar *progressBar;
 
@@ -105,12 +111,16 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *statisticsAction;
+    //QAction *speroexchangeAction;
 //Block Explorer Desativado Por Francis Santana
 //    QAction *blockAction;
 //Block Explorer Desativado Por Francis Santana
 //Remoção do Stake Report - Alteração para Android - Francis Santana
 //    QAction *stakeReportAction;
 //Remoção do Stake Report - Alteração para Android - Francis Santana
+    QAction *charityAction;
+
+    QAction *stakeReportAction;
     QAction *showBackupsAction;
 
     QSystemTrayIcon *trayIcon;
@@ -167,9 +177,14 @@ private slots:
     /** Switch to statistics page*/
     void gotoStatisticsPage();
 //Block Explorer Desativado Por Francis Santana
+    /** Switch to SperoExchange page*/
+    //void gotoSperoExchange();
     /** Switch to block explorer*/
 //    void gotoBlockBrowser();
 //Block Explorer Desativado Por Francis Santana
+    /** Switch to charity page */
+    void gotoCharityPage();
+
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");
     /** Show Sign/Verify Message dialog and switch to verify message tab */
@@ -213,6 +228,7 @@ private slots:
     void clickButtonStakingIcon();
     void clickButtonConnectionsIcon();
     //Barra de Status como botões
+    void charityClicked(QString addr = "");
 };
 
 #endif
