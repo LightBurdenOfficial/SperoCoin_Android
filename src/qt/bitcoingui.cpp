@@ -405,6 +405,8 @@ void BitcoinGUI::createActions()
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setToolTip(tr("Open debugging and diagnostic console"));
+    exportAction = new QAction(QIcon(":/icons/export"), tr("&Export"), this);
+    exportAction->setToolTip(tr("Export to a file."));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
@@ -461,6 +463,11 @@ void BitcoinGUI::createMenuBar()
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
+    settings->addSeparator();
+    settings->addAction(optionsAction);
+
+    QMenu *exporting = appMenuBar->addMenu(tr("&Export"));
+    exporting->addAction(exportAction);
 }
 
 void BitcoinGUI::createToolBars()
@@ -479,10 +486,10 @@ void BitcoinGUI::createToolBars()
 //Block Explorer Desativado Por Francis Santana
 //    toolbar->addAction(blockAction);
 //Block Explorer Desativado Por Francis Santana
-    QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
+    /*QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
     toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar2->setIconSize(QSize(78, 78));
-    toolbar2->addAction(exportAction);
+    toolbar2->addAction(exportAction);*/
 }
 
 void BitcoinGUI::setClientModel(ClientModel *clientModel)
