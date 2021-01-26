@@ -81,6 +81,10 @@ QComboBox {
  QToolBar {
     color:white;
      background-color: #326262;
+     padding-left: 5%;
+     padding-top: 5%;
+     padding-bottom: 5%;
+     display: inline-block;
 }
  QTreeView {
      color: white;
@@ -101,9 +105,9 @@ QComboBox {
     color:white;
      background-color: #2f3751;
      border: 1px solid gray;
-     padding: 2px;
-     border-top-left-radius: 8px;
-     border-top-right-radius: 8px;
+     border-top-left-radius: 12px;
+     border-top-right-radius: 12px;
+     text-align: center;
 }
  QToolButton:hover {
     color:white;

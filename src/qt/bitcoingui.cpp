@@ -308,7 +308,7 @@ void BitcoinGUI::createActions()
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    charityAction = new QAction(QIcon(":/icons/charity_on"), tr("&"), this);
+    charityAction = new QAction(QIcon(":/icons/charity_on"), tr("& "), this);
     charityAction->setToolTip(tr("Stake your SperoCoin for a charity of your choice"));
     charityAction->setCheckable(true);
     charityAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
@@ -395,10 +395,6 @@ void BitcoinGUI::createActions()
     lockWalletAction->setToolTip(tr("Lock wallet"));
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-//Remoção do Stake Report - Alteração para Android - Francis Santana
-//    stakeReportAction = new QAction(QIcon(":/icons/history"), tr("&Show stake report"), this);
-//    stakeReportAction->setToolTip(tr("Open the Stake Report Box"));
-//Remoção do Stake Report - Alteração para Android - Francis Santana
     showBackupsAction = new QAction(QIcon(":/icons/browse"), tr("Show Automatic &Backups"), this);
     showBackupsAction->setToolTip(tr("Show automatically created wallet backups"));
     exportAction = new QAction(QIcon(":/icons/export"), tr("&"), this);
@@ -420,9 +416,6 @@ void BitcoinGUI::createActions()
     connect(lockWalletAction, SIGNAL(triggered()), this, SLOT(lockWallet()));
     connect(signMessageAction, SIGNAL(triggered()), this, SLOT(gotoSignMessageTab()));
     connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
-//Remoção do Stake Report - Alteração para Android - Francis Santana
-  //  connect(stakeReportAction, SIGNAL(triggered()), this, SLOT(stakeReportClicked()));
-//Remoção do Stake Report - Alteração para Android - Francis Santana
 }
 
 void BitcoinGUI::createMenuBar()
@@ -438,15 +431,8 @@ void BitcoinGUI::createMenuBar()
     // Configure the menus
     QMenu *file = appMenuBar->addMenu(tr("&File"));
     file->addAction(backupWalletAction);
-    //file->addAction(exportAction);
     file->addAction(signMessageAction);
     file->addAction(verifyMessageAction);
-    //Remoção do Stake Report - Alteração para Android - Francis Santana
-    //file->addSeparator();
-    //file->addAction(stakeReportAction);   // ** em52
-//    file->addSeparator();
-    //Remoção do Stake Report - Alteração para Android - Francis Santana
-    /*file->addAction(showBackupsAction);*/
     file->addSeparator();
     file->addAction(quitAction);
 
@@ -472,9 +458,11 @@ void BitcoinGUI::createMenuBar()
 
 void BitcoinGUI::createToolBars()
 {
+    //Menu Principal
     QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolbar->setIconSize(QSize(78, 78));
+    toolbar->setIconSize(QSize(112, 112));
+    toolbar->setMovable(false);
     toolbar->addAction(overviewAction);
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(charityAction);
@@ -482,14 +470,6 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
     toolbar->addAction(statisticsAction);
-    //toolbar->addAction(speroexchangeAction);
-//Block Explorer Desativado Por Francis Santana
-//    toolbar->addAction(blockAction);
-//Block Explorer Desativado Por Francis Santana
-    /*QToolBar *toolbar2 = addToolBar(tr("Actions toolbar"));
-    toolbar2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolbar2->setIconSize(QSize(78, 78));
-    toolbar2->addAction(exportAction);*/
 }
 
 void BitcoinGUI::setClientModel(ClientModel *clientModel)
