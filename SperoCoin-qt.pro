@@ -76,7 +76,7 @@ android {
         BOOST_INCLUDE_PATH = $$MAIN_PATH/boost_1_57_0
         BOOST_PATH = $$MAIN_PATH/boost_1_57_0
         #/stage/lib
-        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2r
+        OPENSSL_PATH = $$MAIN_PATH/openssl-1.0.2u
 
         #MINIUPNPC Prebuilt from https://github.com/r4sas/MiniUPnP-for-Android-Prebuilt
         MINIUPNP_PATH = $$MAIN_PATH/miniupnpc-2.0
@@ -136,22 +136,22 @@ android {
                 error("Android BDB: don't know how to build BDB for Android x86")
 
                 # http://stackoverflow.com/a/30235934/529442
-                LIBS += -L$$BOOST_PATH/boost_1_62_0/x86/lib \
+                LIBS += -L$$BOOST_PATH/lib \
                         -lboost_system-gcc-mt-1_62 -lboost_date_time-gcc-mt-1_62 \
                         -lboost_filesystem-gcc-mt-1_62 -lboost_program_options-gcc-mt-1_62 \
-                        -L$$OPENSSL_PATH/openssl-1.0.2r/x86/lib/ -lcrypto -lssl
+                        -L$$OPENSSL_PATH -lcrypto -lssl
 #\
-#           -L$$MINIUPNP_PATH/miniupnpc-2.0/x86/lib/ -lminiupnpc
+#           -L$$MINIUPNP_PATH/miniupnpc-2.0/lib/ -lminiupnpc
 
-                PRE_TARGETDEPS += $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libcrypto.a \
-                        $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libssl.a
+                PRE_TARGETDEPS += $$OPENSSL_PATH/libcrypto.a \
+                        $$OPENSSL_PATH/libssl.a
 
-                DEPENDPATH += $$OPENSSL_PATH/openssl-1.0.2r/include
+                DEPENDPATH += $$OPENSSL_PATH/include
 
-                ANDROID_EXTRA_LIBS += $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libcrypto_1_0_0.so \
-                        $$OPENSSL_PATH/openssl-1.0.2r/x86/lib/libssl_1_0_0.so
+                ANDROID_EXTRA_LIBS += $$OPENSSL_PATH/libcrypto.so \
+                        $$OPENSSL_PATH/libssl.so
 #\
-#           $$MINIUPNP_PATH/miniupnpc-2.0/x86/lib/libminiupnpc.so
+#           $$MINIUPNP_PATH/miniupnpc-2.0/lib/libminiupnpc.so
         }
 }
 
@@ -652,6 +652,9 @@ DISTFILES += \
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = C:/SperoCoin_Android/../Android/deps/miniupnpc-2.0/miniupnpc-2.0/armeabi-v7a/lib/libminiupnpc.so
+    ANDROID_EXTRA_LIBS = \
+        C:/SperoCoin_Android/../Android/deps/miniupnpc-2.0/miniupnpc-2.0/armeabi-v7a/lib/libminiupnpc.so \
+        C:/SperoCoin_Android/../Android/deps/openssl-1.0.2u/libcrypto.so \
+        $$PWD/../Android/deps/openssl-1.0.2u/libssl.so
 
 }
