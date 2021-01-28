@@ -145,7 +145,12 @@ static void InitMessage(const std::string &message)
 {
     if(splashref)
     {
-        splashref->showMessage(QString::fromStdString(message), Qt::AlignBottom|Qt::AlignHCenter, QColor(0,0,0));
+        QFont splashFont;
+        splashFont.setBold(true);
+        splashFont.setPixelSize(40);
+        splashFont.setStretch(125);
+        splashref->showMessage(QString::fromStdString(message+"\n\n") + QString::fromStdString(FormatFullVersion().c_str()), Qt::AlignBottom|Qt::AlignHCenter, QColor(55,55,55));
+        splashref->setFont(splashFont);
         QApplication::instance()->processEvents();
     }
 }
